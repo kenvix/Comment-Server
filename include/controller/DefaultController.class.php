@@ -1,13 +1,13 @@
 <?php
 // +----------------------------------------------------------------------
-// 评论控制器
+// 默认控制器
 // +----------------------------------------------------------------------
 // Written by Kenvix <i@kenvix.com>
 // Copyright (c) 2018 kenvix.com All rights reserved.
 // +----------------------------------------------------------------------
 
-class CommentController {
-    function add() {
-
+class DefaultController {
+    function Other() {
+        view();
     }
 }
