@@ -1,0 +1,24 @@
+{
+  "name": "kenvix/Comment-Server",
+  "description":"A simple wordpress-like comment server designed for hexo theme SeventeenX",
+  "version":"1.0.0-dev",
+  "type":"project",
+  "homepage":"https://github.com/kenvix/Comment-Server",
+  "time":"2018-06-21 20:00:00",
+  "license":"MIT",
+  "authors": [
+    {
+      "name": "Kenvix",
+      "email": "kenvixzure@live.com",
+      "homepage": "https://kenvix.com",
+      "role": "Developer & Creator"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/kenvix/Comment-Server/issues",
+    "wiki": "https://github.com/kenvix/Comment-Server/wiki"
+  },
+  "require": {
+    "aura/sqlquery" : "2.7.1"
+  }
+}

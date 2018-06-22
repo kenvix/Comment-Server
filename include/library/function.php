@@ -163,6 +163,7 @@ function array_map_recursive($filter, $data) {
  * @param string  $text 文本
  * @param int     $code 错误代码，0为无错误
  * @param array   $data 额外数据
+ * @throws FileInaccessibleException
  */
 function msg($text , $code = 0 , $data = array()) {
     if(IsAjax) {
@@ -171,31 +172,22 @@ function msg($text , $code = 0 , $data = array()) {
             'text' => $text,
             'data' => $data
         ));
+        if(!empty($_GET['callback'])) {
+            echo strip_tags($_GET['callback']) . "({$result});";
+        } else {
+            echo $result;
+        }
     } elseif(IsCli) {
         $result = "{$code}: {$text}";
         if(!empty($data)) print_r($data);
+        echo $result;
     } else {
-        view('Default/Message');
+        View::Assign('text', str_replace('\r\n', '<br/>', $text));
+        View::Assign('code', $code);
+        View::Assign('data', $data);
+        View::Load('Default/Message');
     }
-    echo $result;
     die($code);
-}
-
-/**
- * 加载视图
- * @param null $path 留空将自动加载
- * @throws FileInaccessibleException
- */
-function view($path = null) {
-    global $controller;
-    global $action;
-    if(empty($name)) $path = "{$controller}/{$action}";
-    $file = Root . "include/view/{$path}.php";
-    if(file_exists($file)) {
-        include $file;
-    } else {
-        throw new FileInaccessibleException('找不到或无法访问视图文件：' . $file);
-    }
 }
 
 /**
