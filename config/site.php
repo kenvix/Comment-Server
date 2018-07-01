@@ -48,6 +48,18 @@ REMOTE_ADDR     : 在你的服务器没有使用CDN的前提下，填写这个�
 X-Forwarded-For : 若你的服务器使用了CDN（例如cloud flare、百度云加速）填写这个。
 */
 define('GetIPMethod', 'REMOTE_ADDR');
+
+//是否人工审核所有评论。开启后AKISMET仍然会检测评论，但检测通过的评论将标记为待审核
+define('ManuallyCheckComment', true);
+//Akismet 反垃圾评论: 是否启用
+define('AkismetEnabled', true);
+//Akismet 反垃圾评论：处理策略：是否异步处理（评论暂时标记为待审核，然后由计划任务来抽空上传AKISMET检测）。填写为false将在用户提交评论时检测，会导致用户等待时间变长
+define('AkismetAsync', false);
+//Akismet API Key
+define('AkismetAPIKey', '');
+//Akismet 反垃圾评论：是否直接删除垃圾评论
+define('AkismetDeleteSpamDirectly', false);
+
 //////----------------------文章设置----------------------//////
 //文章首次被评论时是否探测文章是否存在，防止恶意用户恶意增加文章
 define('VerifyArticleExistence', true);

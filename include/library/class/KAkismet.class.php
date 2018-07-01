@@ -1,20 +1,17 @@
 <?php
 // +----------------------------------------------------------------------
-// 仅供调试
+// Akismet 类
+// 依赖 TijsVerkoyen\Akismet
 // +----------------------------------------------------------------------
 // Written by Kenvix <i@kenvix.com>
 // Copyright (c) 2018 kenvix.com All rights reserved.
 // +----------------------------------------------------------------------
 
-class DebugController extends BaseController {
+use TijsVerkoyen\Akismet\Akismet;
 
-    public function GetTables() {
-        $m = new BaseModel();
-        print_r($m->query("SHOW TABLES;")->fetchAll());
-    }
+class KAksimet extends Akismet {
+    public function __construct() {
+        parent::__construct(AkismetAPIKey, BlogUrl);
 
-    public function GetPosts() {
-        $m = new BaseModel();
-        print_r($m->execute()->fetchAll());
     }
 }

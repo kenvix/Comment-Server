@@ -19,6 +19,7 @@
     "wiki": "https://github.com/kenvix/Comment-Server/wiki"
   },
   "require": {
-    "aura/sqlquery" : "2.7.1"
+    "aura/sqlquery" : "2.7.1",
+    "tijsverkoyen/akismet" : "1.1.1"
   }
 }

@@ -222,3 +222,25 @@ function getErrorType($errno) {
 function removeSpecialStr($str) {
     return str_replace(['"', "'"], '', $str);
 }
+
+
+/**
+ * 验证邮箱格式是否正确
+ * @param $mail
+ * @return bool
+ */
+function checkEmail($mail) {
+    if(preg_match('/\w+([-+.\']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/',$mail)) return true;
+    else return false;
+}
+
+/**
+ * 验证网址格式是否正确
+ * @param $url
+ * @return bool
+ */
+function checkURL($url) {
+    if(preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%
+    =~_|]/i",$url)) return true;
+    else return false;
+}

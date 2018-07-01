@@ -12,12 +12,49 @@ class CommentController extends BaseController {
         $email   = I('post.email');
         $url     = I('post.url');
         $content = I('post.content');
+        $title   = I('post.title');
+        $pid     = I('post.pid');
         $ip      = GetIPMethod == 'none' ? '' : $_SERVER[GetIPMethod];
-        if(empty($content) || empty($name)) msg('昵称和评论内容不能为空',100);
+        if(empty($content) || empty($name) || empty($title)) msg('昵称和评论内容不能为空',100);
         if(!AllowEmptyEmail && empty($email)) msg('邮箱地址不能为空',100);
+        if(empty($pid)) $pid = 0;
+        else $pid = intval($pid);
+        if(!checkEmail($email)) msg('邮箱格式错误', 101);
+        if(!empty($url) && !checkURL($url)) msg('网址格式错误', 101);
+        $blackName  = explode(' ', BlockedName);
+        $blackEmail = explode(' ', BlockedEmail);
+        $blackWord  = explode(' ', BlockedWord);
+        if(in_array($name, $blackName)) msg('禁止使用该名称', 104);
+        if(in_array($email, $blackEmail)) msg('禁止使用该名称', 104);
+        foreach($blackWord as $value) {
+            if(stripos($name, $value) !== false) msg('昵称中存在违禁词：' . $value,103);
+            if(stripos($content, $value) !== false) msg('评论内容中存在违禁词：' . $value,103);
+        }
+        unset($value);
+        $PostModel = new PostModel();
+        $postid = $PostModel->getPostID($title);
+        if(empty($postid)) msg('该文章不存在，请先添加该文章', 105);
         $m = new CommentModel();
-        $m->add($postid, $pid, $name, $email, $url, $content, date('Y-m-d H:m:s'), $status, $ip, I('server.HTTP_USER_AGENT'));
-
+        if($pid != 0) {
+            $parent = $m->getCommentByCID($pid);
+            if(empty($parent)) msg('指定的父评论不存在或不可用', 102);
+            if($PostModel->getTitle($parent['postid']) != $title) msg('父评论文章不匹配', 102);
+        }
+        $status = CommentModel::StatusNormal;
+        if(AkismetEnabled) $status = CommentModel::StatusWaitingAkismet;
+        elseif(ManuallyCheckComment) $status = CommentModel::StatusPending;
+        if(!AkismetAsync) {
+            $akismet = new KAksimet();
+            try {
+                $akismetResult = $akismet->isSpam($content, $name, $email, $url, BlogUrl . BlogArticlePrefix . urlencode($title) . BlogArticleSuffix, 'comment')
+                if($akismetResult) {
+                    if(AkismetDeleteSpamDirectly) msg('您的评论被识别为垃圾评论，无法提交，请联系站长以了解更多', 108);
+                    else $status = CommentModel::StatusSpam;
+                }
+            } catch (Exception $ex) {}
+        }
+        if($m->add($postid, $pid, $name, $email, $url, $content, date('Y-m-d H:m:s'), $status, $ip, I('server.HTTP_USER_AGENT'))) msg('操作成功');
+        else msg('操作失败，未知错误', 109);
     }
 
     public function Get() {
@@ -42,6 +79,8 @@ class CommentController extends BaseController {
                 'content'  => $value['content'],
                 'date'     => $value['date'],
                 'agent'    => $value['agent'],
+                'cid'      => $value['cid'],
+                'pid'      => $value['pid'],
                 'child'    => $this->getChildComments($value['cid'], $model)
             ];
         }
@@ -59,6 +98,8 @@ class CommentController extends BaseController {
                 'content'  => $value['content'],
                 'date'     => $value['date'],
                 'agent'    => $value['agent'],
+                'cid'      => $value['cid'],
+                'pid'      => $value['pid'],
                 'child'    => $this->getChildComments($value['cid'], $model)
             ];
         }

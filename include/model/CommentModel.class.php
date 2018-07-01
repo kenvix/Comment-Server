@@ -8,10 +8,12 @@
 
 class CommentModel extends BaseModel {
 
-    const StatusAll     = -1;
-    const StatusNormal  = 0;
-    const StatusPending = 1;
-    const StatusDeleted = 2;
+    const StatusAll             = -1;
+    const StatusNormal          = 0; //正常
+    const StatusPending         = 1; //待人工审核
+    const StatusDeleted         = 2; //在回收站
+    const StatusSpam            = 3; //被akismet认为是垃圾评论
+    const StatusWaitingAkismet  = 4; //待人工审核且待AKISMET处理(在AKISMET处理队列)
 
     /**
      * @param int $postid
@@ -26,7 +28,7 @@ class CommentModel extends BaseModel {
      * @param     $agent
      * @return bool
      */
-    public function add(int $postid, int $pid, $author, $email, $url, $content, $date, $status, $ip, $agent) {
+    public function add($postid, $pid, $author, $email, $url, $content, $date, $status, $ip, $agent) {
         return $this->prepare("INSERT INTO `comment`(`postid`, `pid`, `author`, `email`, `url`, `content`, `status`, `ip`, `agent`) VALUES (:postid, :pid, :author, :email, :url, :content, :status, :ip, :agent)")
             ->execute([
                 ':postid' => $postid,
@@ -46,7 +48,7 @@ class CommentModel extends BaseModel {
      * @param int $cid
      * @return bool
      */
-    public function deleteByCID(int $cid) {
+    public function deleteByCID($cid) {
         return $this->prepare('DELETE FROM comment WHERE cid = ?')->execute([$cid]);
     }
 
@@ -54,7 +56,7 @@ class CommentModel extends BaseModel {
      * @param int $postid
      * @return bool
      */
-    public function deleteByPostID(int $postid) {
+    public function deleteByPostID($postid) {
         return $this->prepare('DELETE FROM comment WHERE postid = ?')->execute([$postid]);
     }
 
@@ -63,7 +65,7 @@ class CommentModel extends BaseModel {
      * @param int $pid
      * @return bool
      */
-    public function deleteByPID(int $pid) {
+    public function deleteByPID($pid) {
         return $this->prepare('DELETE FROM comment WHERE pid = ?')->execute([$pid]);
     }
 
@@ -74,7 +76,7 @@ class CommentModel extends BaseModel {
      * @param int $status
      * @return array
      */
-    public function getComments(int $postid, $status = self::StatusNormal) {
+    public function getComments($postid, $status = self::StatusNormal) {
         $db = $this->prepare('SELECT * FROM comment WHERE postid = :postid' . $this->buildCommentStatusSQL($status));
         $db->bindParam(':postid', $postid);
         $db->execute();
@@ -83,12 +85,24 @@ class CommentModel extends BaseModel {
 
 
     /**
-     * get comments by pid(parent id)
+     * @param     $cid
+     * @param int $status
+     * @return mixed
+     */
+    public function getCommentByCID($cid, $status = self::StatusNormal) {
+        $db = $this->prepare('SELECT * FROM comment WHERE cid = :cid' . $this->buildCommentStatusSQL($status));
+        $db->bindParam(':cid', $cid);
+        $db->execute();
+        return $db->fetch();
+    }
+
+    /**
+     * 通过PID获取评论. 混淆警告：若是通过PID获取父评论，应该使用getCommentByCID
      * @param int $pid
      * @param int $status
      * @return array
      */
-    public function getCommentsByPID(int $pid, $status = self::StatusNormal) {
+    public function getCommentsByPID($pid, $status = self::StatusNormal) {
         $db = $this->prepare('SELECT * FROM comment WHERE pid = :pid' . $this->buildCommentStatusSQL($status));
         $db->bindParam(':pid', $pid);
         $db->execute();
@@ -101,7 +115,7 @@ class CommentModel extends BaseModel {
      * @param int $status
      * @return array
      */
-    public function getCommentsParentOnly(int $postid, $status = self::StatusNormal) {
+    public function getCommentsParentOnly($postid, $status = self::StatusNormal) {
         $db = $this->prepare('SELECT * FROM comment WHERE postid = :postid AND pid = 0 ' . $this->buildCommentStatusSQL($status));
         $db->bindParam(':postid', $postid);
         $db->execute();
@@ -114,7 +128,7 @@ class CommentModel extends BaseModel {
      * @param bool $and
      * @return string
      */
-    protected function buildCommentStatusSQL(int $status, $and = true) {
+    protected function buildCommentStatusSQL($status, $and = true) {
         if($status == self::StatusAll) return ' ';
         $sql = ' ';
         if($and) $sql .= 'AND ';
