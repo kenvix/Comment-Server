@@ -210,3 +210,12 @@ function getErrorType($errno) {
     }
     return $errnoo;
 }
+
+/**
+ * 只允许英文,数字以及有限的符号防止注入
+ * @param $str
+ * @return mixed
+ */
+function removeSpecialStr($str) {
+    return str_replace(['"', "'"], '', $str);
+}

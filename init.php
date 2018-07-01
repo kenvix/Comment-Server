@@ -16,7 +16,12 @@ require 'config/site.php';
 
 error_reporting(ErrorReportLevel);
 spl_autoload_register(function ($class){
-    include Root . "include/library/class/{$class}.class.php";
+    if(strlen($class) > 5 && substr($class, -5) == 'Model') $folder = 'model';
+    elseif(strlen($class) > 9 && substr($class, -9) == 'Exception') $folder = 'library/class/exception';
+    elseif(strlen($class) > 10 && substr($class, -10) == 'Controller') $folder = 'controller';
+    else $folder = 'library/class';
+    $path = Root . "include/{$folder}/{$class}.class.php";
+    if(file_exists($path)) include $path;
 });
 
 if(!file_exists('vendor/autoload.php')) {

@@ -5,5 +5,20 @@
 // 请勿使用记事本编辑！
 // +----------------------------------------------------------------------
 
+
 //数据库类型，只允许 mysql 或者 sqlite
 define('DBType', 'mysql');
+//数据库DSN
+define('DSN', 'mysql:dbname=commentserver;host=127.0.0.1');
+
+///////////----------以下设置仅设置数据库类型为mysql时可用----------///////////
+//MySQL 数据库地址，普通主机一般为localhost
+define('DBHost','127.0.0.1');
+//MySQL 数据库用户名
+define('DBUser','root');
+//MySQL 数据库密码
+define('DBPassword','');
+//MySQL 数据库名称
+define('DBName','commentserver');
+
+///////////----------以下设置仅设置数据库类型为sqlite时可用----------///////////
