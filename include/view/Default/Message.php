@@ -1,4 +1,4 @@
-<!DOCTYPE html>if(empty($controller)) $controller = 'Default';
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -131,7 +131,14 @@
 <?php if(!empty($code)) { ?>
     <br/><small><font color="gray">错误代码: <?php echo $code ?></font></small>
 <?php } ?>
-<br/><a style="float:right" href="javascript:history.back(-1)"><< 返回上一页</a>
+<br/>
+<?php if(!empty($data)) { ?>
+    <div id="datainfo" style="display: none">
+        <textarea style="width: 100%; height: 300px;" readonly><?php print_r($data); ?></textarea><br/><br/>
+    </div>
+    <a style="float:left" href="javascript:;" onclick="document.getElementById('datainfo').style = '';">点击查看更多信息</a>
+<?php } ?>
+<a style="float:right" href="javascript:history.back(-1)"><< 返回上一页</a>
 <br/>
 </body>
 </html>

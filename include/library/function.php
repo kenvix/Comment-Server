@@ -163,7 +163,6 @@ function array_map_recursive($filter, $data) {
  * @param string  $text 文本
  * @param int     $code 错误代码，0为无错误
  * @param array   $data 额外数据
- * @throws FileInaccessibleException
  */
 function msg($text , $code = 0 , $data = array()) {
     if(IsAjax) {
@@ -182,10 +181,14 @@ function msg($text , $code = 0 , $data = array()) {
         if(!empty($data)) print_r($data);
         echo $result;
     } else {
-        View::Assign('text', str_replace('\r\n', '<br/>', $text));
-        View::Assign('code', $code);
-        View::Assign('data', $data);
-        View::Load('Default/Message');
+        try {
+            View::Assign('text', str_replace('\r\n', '<br/>', $text));
+            View::Assign('code', $code);
+            View::Assign('data', $data);
+            View::Load('Default/Message');
+        } catch (Exception $ex) {
+            echo "[$code]: $text";
+        }
     }
     die($code);
 }

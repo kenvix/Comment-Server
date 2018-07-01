@@ -27,6 +27,7 @@ class PostModel extends BaseModel {
     public function getPostID($title) {
         $db = $this->prepare('SELECT * FROM post WHERE title = :title');
         $db->bindParam(':title', $title);
+        $db->execute();
         $result = $db->fetch();
         if(empty($result)) return false;
         return $result['postid'];
@@ -36,9 +37,10 @@ class PostModel extends BaseModel {
      * @param int $postid
      * @return bool
      */
-    public function getTitle(int $postid) {
+    public function getTitle($postid) {
         $db = $this->prepare('SELECT * FROM post WHERE postid = :postid');
         $db->bindParam(':postid', $postid);
+        $db->execute();
         $result = $db->fetch();
         if(empty($result)) return false;
         return $result['title'];
@@ -48,7 +50,7 @@ class PostModel extends BaseModel {
      * @param int $postid
      * @return bool
      */
-    public function deleteByPostID(int $postid) {
+    public function deleteByPostID($postid) {
         return $this->prepare('DELETE FROM post WHERE postid = ?')->execute([$postid]);
     }
 
@@ -65,7 +67,7 @@ class PostModel extends BaseModel {
      * @param     $title
      * @return bool
      */
-    public function updateByPostID(int $postid, $title) {
+    public function updateByPostID($postid, $title) {
         $db = $this->prepare('UPDATE `post` SET `title` = :title WHERE `postid` = :postid');
         $db->bindParam(':title', $title);
         $db->bindParam(':postid', $postid);

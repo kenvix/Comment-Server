@@ -9,7 +9,7 @@
 //数据库类型，只允许 mysql 或者 sqlite
 define('DBType', 'mysql');
 //数据库DSN
-define('DSN', 'mysql:dbname=commentserver;host=127.0.0.1');
+define('DSN', 'mysql:charset=utf8;dbname=commentserver;host=127.0.0.1');
 
 ///////////----------以下设置仅设置数据库类型为mysql时可用----------///////////
 //MySQL 数据库地址，普通主机一般为localhost

@@ -8,6 +8,11 @@
 
 class CommentModel extends BaseModel {
 
+    const StatusAll     = -1;
+    const StatusNormal  = 0;
+    const StatusPending = 1;
+    const StatusDeleted = 2;
+
     /**
      * @param int $postid
      * @param int $pid
@@ -60,5 +65,59 @@ class CommentModel extends BaseModel {
      */
     public function deleteByPID(int $pid) {
         return $this->prepare('DELETE FROM comment WHERE pid = ?')->execute([$pid]);
+    }
+
+
+    /**
+     * get all comments by postid
+     * @param int $postid
+     * @param int $status
+     * @return array
+     */
+    public function getComments(int $postid, $status = self::StatusNormal) {
+        $db = $this->prepare('SELECT * FROM comment WHERE postid = :postid' . $this->buildCommentStatusSQL($status));
+        $db->bindParam(':postid', $postid);
+        $db->execute();
+        return $db->fetchAll();
+    }
+
+
+    /**
+     * get comments by pid(parent id)
+     * @param int $pid
+     * @param int $status
+     * @return array
+     */
+    public function getCommentsByPID(int $pid, $status = self::StatusNormal) {
+        $db = $this->prepare('SELECT * FROM comment WHERE pid = :pid' . $this->buildCommentStatusSQL($status));
+        $db->bindParam(':pid', $pid);
+        $db->execute();
+        return $db->fetchAll();
+    }
+
+    /**
+     * get comments which are not child comments
+     * @param int $postid
+     * @param int $status
+     * @return array
+     */
+    public function getCommentsParentOnly(int $postid, $status = self::StatusNormal) {
+        $db = $this->prepare('SELECT * FROM comment WHERE postid = :postid AND pid = 0 ' . $this->buildCommentStatusSQL($status));
+        $db->bindParam(':postid', $postid);
+        $db->execute();
+        return $db->fetchAll();
+    }
+
+    /**
+     * build COMMENT STATUS sql
+     * @param int  $status
+     * @param bool $and
+     * @return string
+     */
+    protected function buildCommentStatusSQL(int $status, $and = true) {
+        if($status == self::StatusAll) return ' ';
+        $sql = ' ';
+        if($and) $sql .= 'AND ';
+        return $sql . "`status` = $status ";
     }
 }
