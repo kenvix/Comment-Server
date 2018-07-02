@@ -244,3 +244,97 @@ function checkURL($url) {
     =~_|]/i",$url)) return true;
     else return false;
 }
+
+/**
+ * URL重定向
+ * @param string $url 重定向的URL地址
+ * @return void
+ */
+function redirect($url) {
+    if (!headers_sent()) {
+        header('Location: ' . $url);
+        die(0);
+    } else {
+        $str    = "<meta http-equiv='Refresh' content='0;URL={$url}'>";
+        echo $str;
+        die(0);
+    }
+}
+
+/**
+ * URL组装
+ * @param string $url URL表达式，格式：'[控制器/操作#锚点@域名]?参数1=值1&参数2=值2...'
+ * @param string|array $vars 传入的参数，支持数组和字符串
+ * @param bool $domain 是否在URL中添加域名
+ * @return string
+ */
+function U($url = '', $vars = [] , $domain = false) {
+    global $controller, $action;
+    // 解析URL
+    $info   =  parse_url($url);
+    if(isset($info['path'])) {
+        $u = explode('/', $info['path']);
+        if (isset($u[0]) && isset($u[1])) {
+            $controller = $u[0];
+            $action = $u[1];
+        } elseif (isset($u[0]) && !isset($u[1])) {
+            $action = $u[0];
+        }
+    }
+    if(isset($info['fragment'])) { // 解析锚点
+        $anchor =   $info['fragment'];
+        if(false !== strpos($anchor,'?')) { // 解析参数
+            list($anchor,$info['query']) = explode('?',$anchor,2);
+        }
+        if(false !== strpos($anchor,'@')) { // 解析域名
+            list($anchor,$host)    =   explode('@',$anchor, 2);
+        }
+    }elseif(false !== strpos($url,'@')) { // 解析域名
+        list($url,$host)    =   explode('@',$info['path'], 2);
+    }
+
+    if(isset($host)) {
+        $domain = $host.(strpos($host,'.')?'':strstr($_SERVER['HTTP_HOST'],'.'));
+    }
+
+    // 解析参数
+    if(is_string($vars)) { // aaa=1&bbb=2 转换成数组
+        parse_str($vars,$vars);
+    }elseif(!is_array($vars)){
+        $vars = array();
+    }
+    if(isset($info['query'])) { // 解析地址里面参数 合并到vars
+        parse_str($info['query'],$params);
+        $vars = array_merge($params,$vars);
+    }
+
+    $vars['c'] = $controller;
+    $vars['a'] = $action;
+
+
+    $url = 'index.php';
+    if(!empty($vars)) {
+        $vars   =   http_build_query($vars);
+        $url   .=   '?'.$vars;
+    }
+    if(isset($anchor)){
+        $url  .= '#'.$anchor;
+    }
+    if($domain) {
+        $url   =  (isSSL() ? 'https://' : 'http://') . $domain . '/' . $url;
+    }
+    return $url;
+}
+
+/**
+ * 判断是否SSL协议
+ * @return boolean
+ */
+function isSSL() {
+    if(isset($_SERVER['HTTPS']) && ('1' == $_SERVER['HTTPS'] || 'on' == strtolower($_SERVER['HTTPS']))){
+        return true;
+    }elseif(isset($_SERVER['SERVER_PORT']) && ('443' == $_SERVER['SERVER_PORT'] )) {
+        return true;
+    }
+    return false;
+}

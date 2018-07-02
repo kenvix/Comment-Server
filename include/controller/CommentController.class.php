@@ -6,7 +6,7 @@
 // Copyright (c) 2018 kenvix.com All rights reserved.
 // +----------------------------------------------------------------------
 
-class CommentController extends BaseController {
+class CommentController extends AuthController {
     public function Add() {
         $name    = I('post.name');
         $email   = I('post.email');
@@ -46,7 +46,7 @@ class CommentController extends BaseController {
         if(!AkismetAsync) {
             $akismet = new KAksimet();
             try {
-                $akismetResult = $akismet->isSpam($content, $name, $email, $url, BlogUrl . BlogArticlePrefix . urlencode($title) . BlogArticleSuffix, 'comment')
+                $akismetResult = $akismet->isSpam($content, $name, $email, $url, BlogUrl . BlogArticlePrefix . urlencode($title) . BlogArticleSuffix, 'comment');
                 if($akismetResult) {
                     if(AkismetDeleteSpamDirectly) msg('您的评论被识别为垃圾评论，无法提交，请联系站长以了解更多', 108);
                     else $status = CommentModel::StatusSpam;
@@ -107,6 +107,6 @@ class CommentController extends BaseController {
     }
 
     public function Delete() {
-
+        $this->checkLogin();
     }
 }

@@ -6,8 +6,9 @@
 // Copyright (c) 2018 kenvix.com All rights reserved.
 // +----------------------------------------------------------------------
 
-class DefaultController extends BaseController {
+class DefaultController extends AuthController {
     function Other() {
+        $this->checkLogin();
         View::Load();
     }
 }

@@ -6,14 +6,16 @@
 // Copyright (c) 2018 kenvix.com All rights reserved.
 // +----------------------------------------------------------------------
 
-class DebugController extends BaseController {
+class DebugController extends AuthController {
 
     public function GetTables() {
+        $this->checkLogin();
         $m = new BaseModel();
         print_r($m->query("SHOW TABLES;")->fetchAll());
     }
 
     public function GetPosts() {
+        $this->checkLogin();
         $m = new BaseModel();
         print_r($m->execute()->fetchAll());
     }

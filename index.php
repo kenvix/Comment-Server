@@ -7,9 +7,10 @@
 // +----------------------------------------------------------------------
 require 'init.php';
 
-$controller = I('get.c');
-$action     = I('get.a');
-
+if(!isset($controller)) $controller = I('get.c');
+if(!isset($action))     $action     = I('get.a');
+if(strpos($action, '_') === 0) msg('ACTION非法', 3);
+if(strpos($controller, '_') === 0) msg('CONTROLLER非法', 3);
 if(empty($controller)) $controller = 'Default';
 if(empty($action)) $action = 'Other';
 else $controller = ucfirst($controller);
@@ -18,9 +19,10 @@ $controllerClassName = "{$controller}Controller";
 
 include "include/controller/{$controllerClassName}.class.php";
 $instance = new $controllerClassName();
+if(method_exists($instance, '_initialize')) $instance->_initialize();
 if(method_exists($instance, $action)) {
     $instance->$action();
 } else {
     if(method_exists($instance, 'Other')) $instance->Other();
-    else msg('没有这种操作！', 1);
+    else msg('没有这种操作！', 2);
 }

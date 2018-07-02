@@ -9,15 +9,15 @@
 //////----------------------基本设置----------------------//////
 //本评论系统站点的地址，必须以 / 结尾
 define('SiteUrl', 'http://localhost/Comment-Server/');
-
+define('SiteName', '评论服务器管理系统');
 //管理员的名字，未认证的任何人不得填写名字
 define('AdminName',  'Kenvix');
 //管理员的邮箱地址，未认证的任何人不得填写该邮箱
 define('AdminEmail',  'kenvixzure@live.com');
 //管理员的登录密码(按照下面的选项的加密结果)
 //访问 http://站点地址/setup/password.php 生成密码
-define('AdminPassword', '64fcc6f6bc7a815041b4db51f00f4bea8e51c13b27f422da0a8522c94641c7e483c3f17b28d0a59add0c8a44a4e4fc1dd3a9ea48bad8cf5b707ac0f44a5f3536');
-//上面的加密结果代表默认密码000000
+define('AdminPassword', 'b0412597dcea813655574dc54a5b74967cf85317f0332a2591be7953a016f8de56200eb37d5ba593b1e4aa27cea5ca27100f94dccd5b04bae5cadd4454dba67d');
+//上面的加密结果代表默认密码111111
 
 //管理员的登录密码的加密算法
 /*
@@ -29,6 +29,9 @@ sha256 : × SHA-256 加密，安全性一般
 sha512 : √ SHA-512 加密，安全性较高
 */
 define('AdminPasswordEncryptionAlgorithm',  'sha512');
+
+//登录COOKIE加密密钥，请随便打32个英文和数字
+define('AdminLoginEncryptKey', 'xew33xqxdocysgqw6rbqavx7r0wutsqf');
 
 //////----------------------基本评论设置----------------------//////
 
