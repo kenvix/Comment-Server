@@ -8,13 +8,14 @@
 
 class CommentController extends AuthController {
     public function Add() {
-        $name    = I('post.name');
-        $email   = I('post.email');
-        $url     = I('post.url');
-        $content = I('post.content');
-        $title   = I('post.title');
-        $pid     = I('post.pid');
-        $ip      = GetIPMethod == 'none' ? '' : $_SERVER[GetIPMethod];
+        $name     = I('post.name');
+        $email    = I('post.email');
+        $url      = I('post.url');
+        $content  = I('post.content');
+        $title    = I('post.title');
+        $pid      = I('post.pid');
+        $postText = empty(I('post.posttext')) ? $title : I('post.posttext');
+        $ip       = GetIPMethod == 'none' ? '' : $_SERVER[GetIPMethod];
         if(empty($content) || empty($name) || empty($title)) msg('昵称和评论内容不能为空',100);
         if(!AllowEmptyEmail && empty($email)) msg('邮箱地址不能为空',100);
         if(empty($pid)) $pid = 0;
@@ -52,8 +53,53 @@ class CommentController extends AuthController {
                     else $status = CommentModel::StatusSpam;
                 }
             } catch (Exception $ex) {}
+        } else {
+            //TODO: 实现异步AKISMET
         }
-        if($m->add($postid, $pid, $name, $email, $url, $content, date('Y-m-d H:m:s'), $status, $ip, I('server.HTTP_USER_AGENT'))) msg('操作成功');
+        $newCID = $m->add($postid, $pid, $name, $email, $url, $content, date('Y-m-d H:m:s'), $status, $ip, I('server.HTTP_USER_AGENT'));
+        if($newCID !== false) {
+            if($status == CommentModel::StatusNormal) {
+                if(!EmailNoticeAsync) {
+                    try {
+                        if($pid != 0) {
+                            $sendMailTo = $parent['email'];
+                            $sendMail = new TemplatedMail('Comment', [
+                                'CommentAuthor1'  => $parent['author'],
+                                'CommentAuthor2'  => $name,
+                                'CommentAuthorUrl1'  => $parent['url'],
+                                'CommentAuthorUrl2'  => $url,
+                                'CommentAuthorEmail1'  => $parent['email'],
+                                'CommentAuthorEmail2'  => $email,
+                                'CommentContent1' => $parent['content'],
+                                'CommentContent2' => $content,
+                                'CommentUrl' => BlogUrl . BlogArticlePrefix . urlencode($title) . BlogArticleSuffix . '#x-comment-' . $newCID,
+                                'BlogName' => BlogName,
+                                'BlogUrl'  => BlogUrl,
+                                'PostTitle' => $postText
+                            ]);
+                        } else {
+                            $sendMailTo = AdminEmail;
+                            $sendMail = new TemplatedMail('CommentToAdmin', [
+                                'CommentAuthor'  => $name,
+                                'CommentAuthorUrl'  => $url,
+                                'CommentAuthorEmail'  => $email,
+                                'CommentContent' => $content,
+                                'CommentUrl' => BlogUrl . BlogArticlePrefix . urlencode($title) . BlogArticleSuffix . '#x-comment-' . $newCID,
+                                'BlogName' => BlogName,
+                                'BlogUrl'  => BlogUrl,
+                                'PostTitle' => $postText
+                            ]);
+                        }
+                        $sendMail->send($sendMailTo);
+                    } catch (Exception $ex) {
+                        //TODO: 实现发送失败日志记录
+                    }
+                } else {
+                    //TODO: 实现异步邮件通知
+                }
+            }
+            msg('操作成功');
+        }
         else msg('操作失败，未知错误', 109);
     }
 

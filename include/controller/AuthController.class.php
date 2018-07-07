@@ -21,6 +21,16 @@ class AuthController extends BaseController {
                 if(($name == strtolower(AdminName) || $name == strtolower(AdminEmail)) && $password == AdminPassword) $this->islogin = true;
             }
         }
+        try {
+            $childClassName = get_called_class();
+            if($childClassName !== false && $childClassName != __CLASS__) {
+                $childClass = new ReflectionClass($childClassName);
+                if($childClass->hasConstant('RequireLogged') && $childClass->getConstant('RequireLogged')) $this->checkLogin();
+                elseif($childClass->hasConstant('DisallowLogged') && $childClass->getConstant('DisallowLogged')) $this->checkLogin(true);
+            }
+        } catch (Exception $ex) {
+            //TODO: 记录日志
+        }
     }
 
     /**

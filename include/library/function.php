@@ -353,16 +353,24 @@ function sendMail($to, $sub = '无主题', $msg = '无内容', $att = array()) {
     $From = EmailNoticeSenderMail;
     switch (EmailNoticeDriver) {
         case 'smtp':
-            $Host = EmailNoticeSMTPHost;
-            $Port = intval(EmailNoticeSMTPPort);
-            $SMTPAuth = (boolean)EmailNoticeSMTPAuth;
-            $Username = EmailNoticeSMTPAuthName;
-            $Password = EmailNoticeSMTPAuthPassword;
-            $Nickname = EmailNoticeSenderName;
-            $SSL = (boolean)EmailNoticeSMTPSSL;
-            $mail = new SMTP($Host, $Port, $SMTPAuth, $Username, $Password, $SSL);
+            /*
+            $mail = new PHPMailer\PHPMailer\PHPMailer(true);
+            $mail->isSMTP();
+            $mail->Host = EmailNoticeSMTPHost;
+            $mail->Port = EmailNoticeSMTPPort;
+            $mail->SMTPAuth = EmailNoticeSMTPAuth;
+            if(EmailNoticeSMTPAuth) {
+                $mail->Username = EmailNoticeSMTPAuthName;                 // SMTP username
+                $mail->Password = EmailNoticeSMTPAuthPassword;                           // SMTP password
+            }
+            $mail->SMTPSecure = EmailNoticeSMTPEncryption;
+            $mail->isHTML(true);
+            $mail->setFrom(EmailNoticeSenderMail, EmailNoticeSenderName)
+            */
+            $mail = new SMTP(EmailNoticeSMTPHost, EmailNoticeSMTPPort, EmailNoticeSMTPAuth, EmailNoticeSMTPAuthName, EmailNoticeSMTPAuthPassword, EmailNoticeSMTPEncryption);
             $mail->att = $att;
-            if ($mail->send($to, $From, $sub, $msg, $Nickname)) {
+            $mail->sleep = EmailNoticeSMTPSleep;
+            if ($mail->send($to, $From, $sub, $msg, EmailNoticeSenderName)) {
                 return true;
             } else {
                 return $mail->log;

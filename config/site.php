@@ -13,6 +13,7 @@ define('SiteName', '评论服务器管理系统');
 //管理员的名字，未认证的任何人不得填写名字
 define('AdminName',  'Kenvix');
 //管理员的邮箱地址，未认证的任何人不得填写该邮箱
+//若开启了评论邮件通知，此邮箱用于通知管理员
 define('AdminEmail',  'kenvixzure@live.com');
 //管理员的登录密码(按照下面的选项的加密结果)
 //访问 http://站点地址/setup/password.php 生成密码
@@ -71,21 +72,30 @@ define('EmailNoticeDriver', 'smtp');
 
 ////////评论邮件通知驱动为SMTP时需填写下列选项////////
 //SMTP服务器地址
-define('EmailNoticeSMTPHost', '');
+define('EmailNoticeSMTPHost', 'smtp.sendcloud.net');
 //SMTP服务器端口
-define('EmailNoticeSMTPPort', '465');
-//SMTP服务器使用SSL 加密
-define('EmailNoticeSMTPSSL', true);
-//SMTP服务器需要身份验证
+define('EmailNoticeSMTPPort', '25');
+//SMTP服务器加密类型
+/*
+可以填写下列选项：
+none            : 无加密明文传输
+tls             : 使用TLS（通常端口号和无加密的一样）
+ssl             : 使用SSL（通常是端口号为465的为ssl）
+*/
+define('EmailNoticeSMTPEncryption', 'none');
+//SMTP服务器是否需要身份验证
 define('EmailNoticeSMTPAuth', true);
 //SMTP服务器需要身份验证时填写：用户名
-define('EmailNoticeSMTPAuthName', '');
+define('EmailNoticeSMTPAuthName', 'Kenvix');
 //SMTP服务器需要身份验证时填写：密码
-define('EmailNoticeSMTPAuthPassword', '');
+define('EmailNoticeSMTPAuthPassword', 'PFCjHpyKfPvfZrgs');
+//发送完成后等待多长时间再关闭连接。时间以微秒计。1微秒（micro second）是百万分之一秒。
+//Sendcloud等第三方平台需要配置此选项，否则可能导致邮件显示发送成功但实际没发
+define('EmailNoticeSMTPSleep', 1000000);
 /* SendCloud 配置说明
 define('EmailNoticeSMTPHost', 'smtp.sendcloud.net');
 define('EmailNoticeSMTPPort', '25');
-define('EmailNoticeSMTPSSL', true);
+define('EmailNoticeSMTPEncryption', 'tls');
 define('EmailNoticeSMTPAuth', true);
 //填写 SendCloud API_USER
 define('EmailNoticeSMTPAuthName', '');
@@ -110,6 +120,8 @@ define('AkismetDeleteSpamDirectly', false);
 define('VerifyArticleExistence', true);
 //以下设置用于探测文章是否的确存在，防止恶意用户恶意增加文章
 //例如，Kenvix's Blog的一篇文章的地址是 https://kenvix.com/post/guestbook/ ，则应该这样写：
+//博客的名称
+define('BlogName', 'Kenvix\'s Blog');
 //博客的地址，必须以 / 结尾
 define('BlogUrl', 'https://kenvix.com/');
 //博客文章前缀，没有的话可以忽略

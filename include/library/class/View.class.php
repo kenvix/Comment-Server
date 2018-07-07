@@ -28,6 +28,19 @@ class View {
     }
 
     /**
+     * 只获取视图即将输出的内容
+     * @param null $path 留空将自动加载
+     * @param bool $guess 是否允许使用推断赋值（用完会销毁）
+     * @return string
+     * @throws FileInaccessibleException
+     */
+    public static function Get($path = null, $guess = true) {
+        ob_start();
+        self::Load($path, $guess);
+        return ob_get_clean();
+    }
+
+    /**
      * 视图变量赋值(推断)
      * @param mixed $name
      * @param mixed $value

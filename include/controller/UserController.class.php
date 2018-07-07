@@ -7,14 +7,13 @@
 // +----------------------------------------------------------------------
 
 class UserController extends AuthController {
+    public const DisallowLogged = true;
 
     public function Login() {
-        $this->checkLogin(true);
         View::Load();
     }
 
     public function LoginAction() {
-        $this->checkLogin(true);
         $name = I('post.user');
         $password = I('post.pw');
         if(empty($name) || empty($password)) redirect(U('User/Login','error=用户名或密码不能为空'));

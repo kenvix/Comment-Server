@@ -7,15 +7,14 @@
 // +----------------------------------------------------------------------
 
 class DebugController extends AuthController {
+    public const RequireLogged = true;
 
     public function GetTables() {
-        $this->checkLogin();
         $m = new BaseModel();
         print_r($m->query("SHOW TABLES;")->fetchAll());
     }
 
     public function GetPosts() {
-        $this->checkLogin();
         $m = new BaseModel();
         print_r($m->execute()->fetchAll());
     }

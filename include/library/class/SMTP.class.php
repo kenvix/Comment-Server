@@ -21,14 +21,19 @@ class SMTP {
     public $error;
     public $att = array(); //附件内容
     public $ssl = false;
+    public $tls = false;
+    public $sleep = 0;
 
-    public function __construct($relay_host = '', $smtp_port = 25, $auth = false, $user, $pass , $ssl = false) {
+    public function __construct($relay_host = '', $smtp_port = 25, $auth = false, $user, $pass , $encryption) {
         $this ->debug = false;
         $this ->smtp_port = $smtp_port;
-        if ($ssl == true) {
-            $this->ssl = true;
-            $relay_host = 'ssl://' . $relay_host;
+        $encryption = strtolower($encryption);
+        switch ($encryption) {
+            case 'ssl': $this->ssl = true; break;
+            case 'tls': $this->tls = true; break;
+            default: break;
         }
+        if ($this->ssl)  $relay_host = 'ssl://' . $relay_host;
         $this ->relay_host = $relay_host;
         $this ->time_out = 30;
         $this ->auth = $auth;
@@ -74,23 +79,25 @@ class SMTP {
         foreach ($TO as $rcpt_to) {
             $rcpt_to = $this ->get_address($rcpt_to);
             if (!$this ->smtp_sockopen($rcpt_to)) {
-                $this ->log_write("Error: Cannot send email to [ " . $rcpt_to . " ] (Step 1)<br/>" . $this->error);
+                $this ->log_write("Error: Cannot send email to [ " . $rcpt_to . " ] (Step 1)\r\n" . $this->error);
                 $sent = false;
                 continue;
             }
             if ($this ->smtp_send($this ->host_name, $mail_from, $rcpt_to, $header, $body)) {
                 $this ->log_write("邮件已成功发送到 [" . $rcpt_to . "]\n");
             } else {
-                $this ->log_write("Error: Cannot send email to [ " . $rcpt_to . " ] (Step 2)<br/>" . $this->error);
+                $this ->log_write("Error: Cannot send email to [ " . $rcpt_to . " ] (Step 2)" . $this->error);
                 $sent = false;
             }
+            if($this->sleep > 0) usleep($this->sleep);
             fclose($this ->sock);
         }
         return $sent;
     }
 
     private function smtp_send($helo, $from, $to, $header, $body = "") {
-        if (!$this ->smtp_putcmd("HELO", $helo)) return $this ->smtp_error("sending HELO command");
+        if (!$this ->smtp_putcmd_general("HELO", $helo)) return $this ->smtp_error("sending HELO command");
+        if ($this->tls && !$this->smtp_putcmd_general('STARTTLS')) return $this ->smtp_error("sending STARTTLS command");
         if ($this ->auth) {
             if (!$this ->smtp_putcmd("AUTH LOGIN", base64_encode($this ->user))) return $this ->smtp_error("sending HELO command");
             if (!$this ->smtp_putcmd("", base64_encode($this ->pass))) return $this ->smtp_error("sending HELO command");
@@ -203,13 +210,24 @@ class SMTP {
         return $this ->smtp_ok();
     }
 
+    private function smtp_putcmd_general($cmd, $arg = "") {
+        if ($arg!="") {
+            if ($cmd=="") $cmd = $arg; else
+                $cmd = $cmd . " " . $arg;
+        }
+        fputs($this ->sock, $cmd . "\r\n");
+        $this ->smtp_debug("> " . $cmd . "\n");
+
+        return $this ->smtp_ok();
+    }
+
     private function smtp_error($string) {
-        $this ->error .= "<br/>Error: Error occurred while " . $string . ".<br/>";
+        $this ->error .= "rError: Error occurred while " . $string;
         return false;
     }
 
     private function log_write($message) {
-        $this->log .= '<br/>'.$message.'<br/>';
+        $this->log .= '\r\n'.$message;
         return true;
     }
 

@@ -26,10 +26,10 @@ class CommentModel extends BaseModel {
      * @param     $status
      * @param     $ip
      * @param     $agent
-     * @return bool
+     * @return bool|int 成功时返回自增值，否则为false
      */
     public function add($postid, $pid, $author, $email, $url, $content, $date, $status, $ip, $agent) {
-        return $this->prepare("INSERT INTO `comment`(`postid`, `pid`, `author`, `email`, `url`, `content`, `status`, `ip`, `agent`) VALUES (:postid, :pid, :author, :email, :url, :content, :status, :ip, :agent)")
+        $this->prepare("INSERT INTO `comment`(`postid`, `pid`, `author`, `email`, `url`, `content`, `status`, `ip`, `agent`) VALUES (:postid, :pid, :author, :email, :url, :content, :status, :ip, :agent)")
             ->execute([
                 ':postid' => $postid,
                 ':pid' => $pid,
@@ -42,6 +42,7 @@ class CommentModel extends BaseModel {
                 ':ip' => $ip,
                 ':agent' => $agent
             ]);
+        return $this->lastInsertId();
     }
 
     /**
