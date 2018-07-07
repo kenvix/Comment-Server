@@ -338,3 +338,52 @@ function isSSL() {
     }
     return false;
 }
+
+/**
+ * 快捷发送一封邮件
+ * @author Kenvix
+ * @source Tieba-Cloud-Sign Project
+ * @param string $to 收件人
+ * @param string $sub 邮件主题
+ * @param string $msg 邮件内容(HTML)
+ * @param array $att 附件，每个键为文件名称，值为附件内容（可以为二进制文件），例如array('a.txt' => 'abcd' , 'b.png' => file_get_contents('x.png'))
+ * @return bool 成功:true 失败：错误消息. 使用 === true 确定是否成功
+ */
+function sendMail($to, $sub = '无主题', $msg = '无内容', $att = array()) {
+    $From = EmailNoticeSenderMail;
+    switch (EmailNoticeDriver) {
+        case 'smtp':
+            $Host = EmailNoticeSMTPHost;
+            $Port = intval(EmailNoticeSMTPPort);
+            $SMTPAuth = (boolean)EmailNoticeSMTPAuth;
+            $Username = EmailNoticeSMTPAuthName;
+            $Password = EmailNoticeSMTPAuthPassword;
+            $Nickname = EmailNoticeSenderName;
+            $SSL = (boolean)EmailNoticeSMTPSSL;
+            $mail = new SMTP($Host, $Port, $SMTPAuth, $Username, $Password, $SSL);
+            $mail->att = $att;
+            if ($mail->send($to, $From, $sub, $msg, $Nickname)) {
+                return true;
+            } else {
+                return $mail->log;
+            }
+            break;
+
+        default:
+            $header  = "MIME-Version:1.0\r\n";
+            $header .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+            $header .= "To: " . $to . "\r\n";
+            $header .= "From: " . $From . "\r\n";
+            $header .= "Subject: " . $sub . "\r\n";
+            $header .= 'Reply-To: ' . $From . "\r\n";
+            $header .= "Date: " . date("r") . "\r\n";
+            $header .= "Content-Transfer-Encoding: base64\r\n";
+            return mail(
+                $to,
+                $sub,
+                base64_encode($msg),
+                $header
+            );
+            break;
+    }
+}

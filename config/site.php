@@ -52,6 +52,48 @@ X-Forwarded-For : 若你的服务器使用了CDN（例如cloud flare、百度云
 */
 define('GetIPMethod', 'REMOTE_ADDR');
 
+////////评论邮件通知////////
+//评论邮件通知：是否启用
+define('EmailNoticeEnabled', true);
+//评论邮件通知：处理策略：是否异步处理（将邮件通知任务添加到队列，然后由计划任务来抽空发邮件）。填写为false将在用户提交评论时操作，会导致用户等待时间变长
+define('EmailNoticeAsync', false);
+//评论邮件通知：发件人名称
+define('EmailNoticeSenderName', 'Kenvix');
+//评论邮件通知：发件人邮箱
+define('EmailNoticeSenderMail', 'i@kenvix.com');
+//评论邮件通知驱动
+/*
+可以填写下列选项：
+php             : 调用php mail函数。不需要填写任何设置
+smtp            : 使用SMTP，需要填写SMTP设置
+*/
+define('EmailNoticeDriver', 'smtp');
+
+////////评论邮件通知驱动为SMTP时需填写下列选项////////
+//SMTP服务器地址
+define('EmailNoticeSMTPHost', '');
+//SMTP服务器端口
+define('EmailNoticeSMTPPort', '465');
+//SMTP服务器使用SSL 加密
+define('EmailNoticeSMTPSSL', true);
+//SMTP服务器需要身份验证
+define('EmailNoticeSMTPAuth', true);
+//SMTP服务器需要身份验证时填写：用户名
+define('EmailNoticeSMTPAuthName', '');
+//SMTP服务器需要身份验证时填写：密码
+define('EmailNoticeSMTPAuthPassword', '');
+/* SendCloud 配置说明
+define('EmailNoticeSMTPHost', 'smtp.sendcloud.net');
+define('EmailNoticeSMTPPort', '25');
+define('EmailNoticeSMTPSSL', true);
+define('EmailNoticeSMTPAuth', true);
+//填写 SendCloud API_USER
+define('EmailNoticeSMTPAuthName', '');
+//填写 SendCloud API_KEY
+define('EmailNoticeSMTPAuthPassword', '');
+*/
+
+////////AKISMET反垃圾评论////////
 //是否人工审核所有评论。开启后AKISMET仍然会检测评论，但检测通过的评论将标记为待审核
 define('ManuallyCheckComment', true);
 //Akismet 反垃圾评论: 是否启用

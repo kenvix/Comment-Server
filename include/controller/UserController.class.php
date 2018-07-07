@@ -21,8 +21,8 @@ class UserController extends AuthController {
         $password = hash(AdminPasswordEncryptionAlgorithm, $password);
         if($password == AdminPassword && (strtolower($name) == strtolower(AdminName) || strtolower($name) == strtolower(AdminEmail))) {
             $time = time() + (isset($_POST['ispersis']) ? 9999999 : 86400);
-            setcookie('user', $this->encryptLoginCookie($name), $time);
-            setcookie('pass', $this->encryptLoginCookie($password), $time);
+            setcookie('commentserver_user', $this->encryptLoginCookie($name), $time);
+            setcookie('commentserver_pass', $this->encryptLoginCookie($password), $time);
             redirect(U('Default/Other'));
         } else {
             redirect(U('User/Login','error=用户名或密码错误'));

@@ -13,9 +13,9 @@ class AuthController extends BaseController {
     public $islogin = false;
 
     public function __construct() {
-        if(!empty($_COOKIE['user']) && !empty($_COOKIE['pass'])) {
-            $name = $this->decryptLoginCookie($_COOKIE['user']);
-            $password = $this->decryptLoginCookie($_COOKIE['pass']);
+        if(!empty($_COOKIE['commentserver_user']) && !empty($_COOKIE['commentserver_pass'])) {
+            $name = $this->decryptLoginCookie($_COOKIE['commentserver_user']);
+            $password = $this->decryptLoginCookie($_COOKIE['commentserver_pass']);
             if(!empty($name) && !empty($password)) {
                 $name = strtolower($name);
                 if(($name == strtolower(AdminName) || $name == strtolower(AdminEmail)) && $password == AdminPassword) $this->islogin = true;
