@@ -269,7 +269,8 @@ function redirect($url) {
  * @return string
  */
 function U($url = '', $vars = [] , $domain = false) {
-    global $controller, $action;
+    $controller = Controller;
+    $action     = Action;
     // 解析URL
     $info   =  parse_url($url);
     if(isset($info['path'])) {
@@ -337,6 +338,29 @@ function isSSL() {
         return true;
     }
     return false;
+}
+
+/**
+ * 生成Token，若为Ajax请求，将送出token头
+ * @return string token
+ */
+function generateToken(){
+    static $tokenName  = TokenName;
+    static $tokenType  = TokenType;
+    if(!isset($_SESSION[$tokenName])) {
+        $_SESSION[$tokenName]  = array();
+    }
+    // 标识当前页面唯一性
+    $tokenKey   =  md5($_SERVER['REQUEST_URI']);
+    if(isset($_SESSION[$tokenName][$tokenKey])) {// 相同页面不重复生成session
+        $tokenValue = $_SESSION[$tokenName][$tokenKey];
+    }else{
+        $tokenValue = is_callable($tokenType) ? $tokenType(microtime(true)) : md5(microtime(true));
+        $_SESSION[$tokenName][$tokenKey]   =  $tokenValue;
+        if(IsAjax)
+            header($tokenName.': ' . $tokenKey.'_'.$tokenValue); //ajax需要获得这个header并替换页面中meta中的token值
+    }
+    return $tokenKey.'_'.$tokenValue;
 }
 
 /**

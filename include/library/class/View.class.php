@@ -61,9 +61,7 @@ class View {
     }
 
     private static function GetPath($path) {
-        global $controller;
-        global $action;
-        if(empty($path)) $path = "{$controller}/{$action}";
+        if(empty($path)) $path = ControllerName . "/" . Action;
         return $path;
     }
 }

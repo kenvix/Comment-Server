@@ -7,10 +7,15 @@
 // +----------------------------------------------------------------------
 
 class PostController extends BaseController {
+
+    /**
+     * 添加文章
+     * @throws Exception
+     */
     public function Add() {
-        $title = I('get.title');
+        $title = $this->getTitle();
         if(empty($title)) msg('文章标题不能为空',110);
-        $title = str_replace(['\\', '/', '?', '&', '#'], '' , $title);
+        $title = str_replace(['\\', '/', '?', '&', '#', '"', '\'', ':', '<', '>', '*', '|'], '' , $title);
         if(empty($title)) msg('无效的文章标题',110);
         $model = new PostModel();
         if(!empty($model->getPostID($title))) msg('该文章已经存在', 111);
@@ -24,7 +29,7 @@ class PostController extends BaseController {
             if(empty($code))  msg('网络请求出错',118);
             if($code != 200 && $code != 204 && $code != 205) msg('无法验证文章，对端返回HTTP码：' . $code, 115);
         }
-        if($model->add($title)) msg('添加文章成功');
+        if($model->add($title) && Controller == __CLASS__ ) msg('添加文章成功');
         msg('添加文章失败，未知错误', 119);
     }
 }

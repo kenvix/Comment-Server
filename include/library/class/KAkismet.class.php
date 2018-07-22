@@ -9,7 +9,7 @@
 
 use TijsVerkoyen\Akismet\Akismet;
 
-class KAksimet extends Akismet {
+class KAkismet extends Akismet {
     public function __construct() {
         parent::__construct(AkismetAPIKey, BlogUrl);
 

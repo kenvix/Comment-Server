@@ -8,11 +8,12 @@
 
 class CommentController extends AuthController {
     public function Add() {
-        $name     = I('post.name');
+        $this->writeCORSHeader();
+        $name     = I('post.author');
         $email    = I('post.email');
         $url      = I('post.url');
         $content  = I('post.content');
-        $title    = I('post.title');
+        $title    = $this->getTitle();
         $pid      = I('post.pid');
         $postText = empty(I('post.posttext')) ? $title : I('post.posttext');
         $ip       = GetIPMethod == 'none' ? '' : $_SERVER[GetIPMethod];
@@ -26,7 +27,7 @@ class CommentController extends AuthController {
         $blackEmail = explode(' ', BlockedEmail);
         $blackWord  = explode(' ', BlockedWord);
         if(in_array($name, $blackName)) msg('禁止使用该名称', 104);
-        if(in_array($email, $blackEmail)) msg('禁止使用该名称', 104);
+        if(in_array($email, $blackEmail)) msg('禁止使用该邮箱地址', 104);
         foreach($blackWord as $value) {
             if(stripos($name, $value) !== false) msg('昵称中存在违禁词：' . $value,103);
             if(stripos($content, $value) !== false) msg('评论内容中存在违禁词：' . $value,103);
@@ -34,7 +35,10 @@ class CommentController extends AuthController {
         unset($value);
         $PostModel = new PostModel();
         $postid = $PostModel->getPostID($title);
-        if(empty($postid)) msg('该文章不存在，请先添加该文章', 105);
+        if(empty($postid)) {
+            if(AutoAddPostWhenNotExists) (new PostController())->Add();
+            else msg('该文章不存在，请先添加该文章', 105);
+        }
         $m = new CommentModel();
         if($pid != 0) {
             $parent = $m->getCommentByCID($pid);
@@ -45,7 +49,7 @@ class CommentController extends AuthController {
         if(AkismetEnabled) $status = CommentModel::StatusWaitingAkismet;
         elseif(ManuallyCheckComment) $status = CommentModel::StatusPending;
         if(!AkismetAsync) {
-            $akismet = new KAksimet();
+            $akismet = new KAkismet();
             try {
                 $akismetResult = $akismet->isSpam($content, $name, $email, $url, BlogUrl . BlogArticlePrefix . urlencode($title) . BlogArticleSuffix, 'comment');
                 if($akismetResult) {
@@ -90,7 +94,9 @@ class CommentController extends AuthController {
                                 'PostTitle' => $postText
                             ]);
                         }
-                        $sendMail->send($sendMailTo);
+                        if(!$sendMail->send($sendMailTo)) {
+                            //TODO: 实现发送失败日志记录
+                        }
                     } catch (Exception $ex) {
                         //TODO: 实现发送失败日志记录
                     }
@@ -103,15 +109,24 @@ class CommentController extends AuthController {
         else msg('操作失败，未知错误', 109);
     }
 
+    /**
+     * 获取文章评论，同时返回一个可以用于发布评论的token
+     * @throws Exception
+     */
     public function Get() {
-        $title = I('get.title');
-        if(empty($title)) msg('文章标题不能为空',100);
+        $this->writeCORSHeader();
+        $title = $this->getTitle();
+        if(empty($title)) msg('应至少填充文章标题或文章URL',100);
         $PostModel = new PostModel();
         $postid = $PostModel->getPostID($title);
-        if(empty($postid)) msg('指定的文章不存在', 121);
+        if(empty($postid)) {
+            if(AutoAddPostWhenNotExists) (new PostController())->Add();
+            else msg('该文章不存在，请先添加该文章', 105);
+        }
         $CommentModel = new CommentModel();
         $fathers  = $CommentModel->getCommentsParentOnly($postid);
         $comments = $this->getComments($fathers, $CommentModel);
+        $comments[TokenName] = generateToken();
         msg('',0, $comments);
     }
 
@@ -150,6 +165,10 @@ class CommentController extends AuthController {
             ];
         }
         return $return;
+    }
+
+    public function testTitleParse() {
+        echo $this->getTitle();
     }
 
     public function Delete() {

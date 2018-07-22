@@ -10,6 +10,8 @@
 //本评论系统站点的地址，必须以 / 结尾
 define('SiteUrl', 'http://localhost/Comment-Server/');
 define('SiteName', '评论服务器管理系统');
+//信任的域名。允许来自下列域名的XHR请求，用空格分隔 必须全部小写！
+define('TrustedDomain', 'localhost:4000 127.0.0.1:4000 kenvix.com www.kenvix.com');
 //管理员的名字，未认证的任何人不得填写名字
 define('AdminName',  'Kenvix');
 //管理员的邮箱地址，未认证的任何人不得填写该邮箱

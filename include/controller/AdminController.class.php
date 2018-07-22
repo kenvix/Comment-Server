@@ -10,7 +10,7 @@ class AdminController extends AuthController {
     public const RequireLogged = true;
 
     public function CheckAkismetAPIKey() {
-        $akismet = new KAksimet();
+        $akismet = new KAkismet();
         if($akismet->verifyKey()) msg('Akismet APIKey 有效');
         else msg('Akismet APIKey 无效');
     }

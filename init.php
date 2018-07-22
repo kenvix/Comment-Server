@@ -9,7 +9,7 @@
 define('SystemVersion', '1.0');
 define('Root', dirname(__FILE__ ) . '/');
 define('IsCli', (defined('FlagCliMode') || PHP_SAPI == "cli") ? true : false);
-define('IsAjax', (isset($_GET['ajax']) || (isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && strtolower($_SERVER["HTTP_X_REQUESTED_WITH"])=="xmlhttprequest")) ? true : false);
+define('IsAjax', (isset($_GET['ajax']) || isset($_SERVER['HTTP_ORIGIN']) || isset($_SERVER["HTTP_X_REQUESTED_WITH"])) ? true : false);
 
 require 'config/advanced.php';
 require 'config/database.php';
