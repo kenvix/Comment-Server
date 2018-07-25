@@ -15,3 +15,6 @@ git clone https://github.com/kenvix/Comment-Server.git
 composer install
 ```
 修改 config 目录下的所有设置。参考注释修改。
+
+# 入口
+位于public文件夹

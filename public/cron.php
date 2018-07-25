@@ -6,6 +6,6 @@
 // Copyright (c) 2018 kenvix.com All rights reserved.
 // +----------------------------------------------------------------------
 
-require 'init.php';
+require '../init.php';
 
 (new Application())->SetController('Cron')->Run();
