@@ -104,6 +104,8 @@ define('EmailNoticeSMTPAuthName', '');
 //填写 SendCloud API_KEY
 define('EmailNoticeSMTPAuthPassword', '');
 */
+//是否使用破坏性代码暴力隐藏退订按钮
+define('EmailHideUnsubscribeButton', true);
 
 ////////AKISMET反垃圾评论////////
 //是否人工审核所有评论。开启后AKISMET仍然会检测评论，但检测通过的评论将标记为待审核

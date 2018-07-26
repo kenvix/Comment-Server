@@ -74,7 +74,8 @@ class CommentController extends AuthController {
                 //TODO: 实现异步AKISMET
             }
         }
-        $newCID = $m->add($postid, $pid, $name, $email, $url, $content, date('Y-m-d H:m:s'), $status, $ip, I('server.HTTP_USER_AGENT'));
+        $date = date('Y-m-d H:m:s');
+        $newCID = $m->add($postid, $pid, $name, $email, $url, $content, $date, $status, $ip, I('server.HTTP_USER_AGENT'));
         if($newCID !== false) {
             if($status == CommentModel::StatusNormal) {
                 if(!EmailNoticeAsync) {
@@ -118,10 +119,27 @@ class CommentController extends AuthController {
                     //TODO: 实现异步邮件通知
                 }
             }
+            $newCommentInfo = [
+                'content'  => $content,
+                'date'     => $date,
+                'agent'    => I('server.HTTP_USER_AGENT'),
+                'cid'      => $newCID,
+                'pid'      => $pid,
+                'child'    => []
+            ];
+            if($email == self::AdminEmailSign) {
+                $newCommentInfo['author']   = AdminName;
+                $newCommentInfo['avatar']   = md5(AdminEmail);
+                $newCommentInfo['url']      = BlogUrl;
+            } else {
+                $newCommentInfo['author']   = $name;
+                $newCommentInfo['avatar']   = md5($email);
+                $newCommentInfo['url']      = $url;
+            }
             if($status != CommentModel::StatusNormal)
-                msg('评论提交成功，待管理员审核后即可显示', 200);
+                msg('评论提交成功，待管理员审核后即可显示', 200, $newCommentInfo);
             else
-                msg('评论提交成功');
+                msg('评论提交成功',0, $newCommentInfo);
         }
         else msg('操作失败，未知错误', 109);
     }

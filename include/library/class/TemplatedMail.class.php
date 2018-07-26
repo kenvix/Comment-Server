@@ -33,22 +33,27 @@ class TemplatedMail {
     }
 
     /**
+     * 从模版获取邮件内容
      * @return string
      * @throws FileInaccessibleException
      */
-    private function getContent() {
+    public function getContent() {
         foreach($this->var as $key => $value)
             View::Assign($key, $value);
-        return View::Get("Mail/{$this->type}/Content");
+        if(EmailHideUnsubscribeButton)
+            return View::Get("Mail/{$this->type}/Content") . '<div style="display: none !important;"><!--- <style><script>';
+        else
+            return View::Get("Mail/{$this->type}/Content");
     }
 
     /**
+     * 从模版获取邮件标题
      * @return string
      * @throws FileInaccessibleException
      */
-    private function getTitle() {
+    public function getTitle() {
         foreach($this->var as $key => $value)
             View::Assign($key, $value);
-        return View::Get("Mail/{$this->type}/Content");
+        return View::Get("Mail/{$this->type}/Title");
     }
 }
