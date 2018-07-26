@@ -21,8 +21,8 @@ class CommentController extends AuthController {
         if(!AllowEmptyEmail && empty($email)) msg('邮箱地址不能为空',100);
         if(empty($pid)) $pid = 0;
         else $pid = intval($pid);
-        if(!checkEmail($email)) msg('邮箱格式错误', 101);
-        if(!empty($url) && !checkURL($url)) msg('网址格式错误', 101);
+        if(!checkEmail($email)) msg('邮箱格式错误，请更正', 101);
+        if(!empty($url) && !checkURL($url)) msg('网址格式错误，请更正或直接留空', 101);
         $blackName  = explode(' ', BlockedName);
         $blackEmail = explode(' ', BlockedEmail);
         $blackWord  = explode(' ', BlockedWord);
@@ -104,7 +104,7 @@ class CommentController extends AuthController {
                     //TODO: 实现异步邮件通知
                 }
             }
-            msg('操作成功');
+            msg('评论提交成功');
         }
         else msg('操作失败，未知错误', 109);
     }
@@ -126,8 +126,8 @@ class CommentController extends AuthController {
         $CommentModel = new CommentModel();
         $fathers  = $CommentModel->getCommentsParentOnly($postid);
         $comments = $this->getComments($fathers, $CommentModel);
-        $comments[TokenName] = generateToken();
-        msg('',0, $comments);
+        //$comments[TokenName] = generateToken();
+        msg('OK',0, ['comments' => $comments]);
     }
 
     private function getComments(array $comments, CommentModel $model) {
@@ -135,7 +135,7 @@ class CommentController extends AuthController {
         foreach ($comments as $value) {
             $return[$value['cid']] = [
                 'author'   => $value['author'],
-                'email'    => $value['email'],
+                'avatar'   => md5($value['email']),
                 'url'      => $value['url'],
                 'content'  => $value['content'],
                 'date'     => $value['date'],
@@ -154,7 +154,7 @@ class CommentController extends AuthController {
         foreach ($comments as $value) {
             $return[$value['cid']] = [
                 'author'   => $value['author'],
-                'email'    => $value['email'],
+                'avatar'   => md5($value['email']),
                 'url'      => $value['url'],
                 'content'  => $value['content'],
                 'date'     => $value['date'],

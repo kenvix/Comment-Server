@@ -125,10 +125,12 @@ define('VerifyArticleExistence', true);
 //博客的名称
 define('BlogName', 'Kenvix\'s Blog');
 //博客的地址，必须以 / 结尾
-define('BlogUrl', 'https://kenvix.com/');
+define('BlogUrl', 'http://127.0.0.1:4000/');
 //博客文章前缀，没有的话可以忽略
 define('BlogArticlePrefix','post/');
 //博客文章后缀，没有的话可以忽略
 define('BlogArticleSuffix','/');
+//博客文章后缀是否包含参数？
+define('BlogArticleSuffixWithQuery',false);
 
 //////----------------------垃圾评论设置----------------------//////

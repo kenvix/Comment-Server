@@ -419,3 +419,19 @@ function sendMail($to, $sub = '无主题', $msg = '无内容', $att = array()) {
             break;
     }
 }
+
+/**
+ * URL是否可以信任
+ * @param $url
+ * @return bool
+ */
+function isURLTrusted($url) {
+    $data = parse_url($url);
+    if(!empty($data['host'])) {
+        $data['host'] = strtolower($data['host']);
+        if((empty($data['port']) && in_array($data['host'], Option::getTrustedDomain())) || (!empty($data['port']) && in_array($data['host'] . ':' . $data['port'], Option::getTrustedDomain()))) {
+            return true;
+        }
+    }
+    return false;
+}

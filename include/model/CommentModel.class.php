@@ -29,7 +29,7 @@ class CommentModel extends BaseModel {
      * @return bool|int 成功时返回自增值，否则为false
      */
     public function add($postid, $pid, $author, $email, $url, $content, $date, $status, $ip, $agent) {
-        $this->prepare("INSERT INTO `comment`(`postid`, `pid`, `author`, `email`, `url`, `content`, `status`, `ip`, `agent`) VALUES (:postid, :pid, :author, :email, :url, :content, :status, :ip, :agent)")
+        $this->prepare("INSERT INTO `comment`(`postid`, `pid`, `author`, `email`, `url`, `content`, `status`, `ip`, `agent`, `date`) VALUES (:postid, :pid, :author, :email, :url, :content, :status, :ip, :agent, :date)")
             ->execute([
                 ':postid' => $postid,
                 ':pid' => $pid,
