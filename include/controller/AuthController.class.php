@@ -14,12 +14,7 @@ class AuthController extends BaseController {
 
     public function __construct() {
         if(!empty($_COOKIE['commentserver_user']) && !empty($_COOKIE['commentserver_pass'])) {
-            $name = $this->decryptLoginCookie($_COOKIE['commentserver_user']);
-            $password = $this->decryptLoginCookie($_COOKIE['commentserver_pass']);
-            if(!empty($name) && !empty($password)) {
-                $name = strtolower($name);
-                if(($name == strtolower(AdminName) || $name == strtolower(AdminEmail)) && $password == AdminPassword) $this->islogin = true;
-            }
+            $this->islogin = $this->checkLoginByCookieString($_COOKIE['commentserver_user'], $_COOKIE['commentserver_pass']);
         }
         try {
             $childClassName = get_called_class();
@@ -31,6 +26,22 @@ class AuthController extends BaseController {
         } catch (Exception $ex) {
             //TODO: 记录日志
         }
+    }
+
+    /**
+     * 通过输入生成的cookie字符串检查是否登录了
+     * @param $user
+     * @param $pass
+     * @return bool
+     */
+    protected function checkLoginByCookieString($user, $pass) {
+        $name = $this->decryptLoginCookie($user);
+        $password = $this->decryptLoginCookie($pass);
+        if(!empty($name) && !empty($password)) {
+            $name = strtolower($name);
+            if(($name == strtolower(AdminName) || $name == strtolower(AdminEmail)) && $password == AdminPassword) return true;
+        }
+        return false;
     }
 
     /**
