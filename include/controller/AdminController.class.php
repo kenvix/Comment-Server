@@ -20,4 +20,13 @@ class AdminController extends AuthController {
         if($result === true) msg('测试邮件发送成功');
         else msg('测试邮件发送失败：' . $result,201);
     }
+
+    public function Adminer() {
+        if(!session_start()) msg('服务器不支持PHP SESSION');
+        $_SESSION['ADMINER_PW'] = hash('sha512', $_COOKIE['commentserver_pass'] . $_SERVER['DOCUMENT_ROOT'] . $_SERVER['SERVER_NAME']);
+        if(DBType == 'sqlite')
+            redirect('adminer.php');
+        else
+            redirect('adminer.php?username=&db=' . DBName);
+    }
 }

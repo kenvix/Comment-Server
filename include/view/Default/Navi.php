@@ -13,7 +13,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li></li>
+                <li class="topNavi"><a href="<?php echo U('Admin/Adminer'); ?>" target="_blank"><span class="glyphicon glyphicon-compressed"></span> Adminer</a></li>
+                <li class="topNavi"><a href="<?php echo U('Admin/PHPInfo'); ?>" target="_blank"><span class="glyphicon glyphicon glyphicon-oil"></span> PHPInfo</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div>

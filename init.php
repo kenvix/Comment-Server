@@ -19,6 +19,16 @@ require 'config/comment.php';
 require 'config/email.php';
 
 error_reporting(ErrorReportLevel);
+
+if(DBType == 'mysql') {
+    define('DSN', 'mysql://charset=utf8;dbname='.DBName.';host='.DBHost.';port='.DBPort);
+} elseif(DBType == 'sqlite') {
+
+} else {
+    echo '数据库类型填写错误，请检查配置文件';
+    die(254);
+}
+
 spl_autoload_register(function ($class){
     if(strlen($class) > 5 && substr($class, -5) == 'Model') $folder = 'model';
     elseif(strlen($class) > 9 && substr($class, -9) == 'Exception') $folder = 'library/class/exception';

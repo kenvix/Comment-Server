@@ -8,17 +8,17 @@
 
 //数据库类型，只允许 mysql 或者 sqlite
 define('DBType', 'mysql');
-//数据库DSN
-define('DSN', 'mysql:charset=utf8;dbname=commentserver;host=127.0.0.1');
 
 ///////////----------以下设置仅设置数据库类型为mysql时可用----------///////////
-//MySQL 数据库地址，普通主机一般为localhost
-define('DBHost','127.0.0.1');
+//Mysql 数据库地址
+define('DBHost', '127.0.0.1');
+//Mysql 数据库端口
+define('DBPort', 3306);
 //MySQL 数据库用户名
 define('DBUser','root');
 //MySQL 数据库密码
 define('DBPassword','');
 //MySQL 数据库名称
-define('DBName','commentserver');
+define('DBName', 'commentserver');
 
 ///////////----------以下设置仅设置数据库类型为sqlite时可用----------///////////
