@@ -15,6 +15,8 @@ chdir(Root);
 require 'config/advanced.php';
 require 'config/database.php';
 require 'config/site.php';
+require 'config/comment.php';
+require 'config/email.php';
 
 error_reporting(ErrorReportLevel);
 spl_autoload_register(function ($class){
