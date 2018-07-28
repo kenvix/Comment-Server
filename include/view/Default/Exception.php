@@ -132,9 +132,9 @@
 <table style="width:100%"><thead><th>文件</th><th>行</th><th>代码</th></thead><tbody>
     <?php
     $trace = $ex->getTrace();
-    echo '<tr><td>' . $ex->getFile() . '</td><td>' . $ex->getLine() . '' . '</td><td>[抛出异常]</td></tr>';
+    echo '<tr><td>' . str_replace(Root,'',$ex->getFile()) . '</td><td>' . $ex->getLine() . '' . '</td><td>[抛出异常]</td></tr>';
     foreach ($trace as $v) {
-        $tracefile = isset($v['file']) ? $v['file'] : '';
+        $tracefile = isset($v['file']) ? str_replace(Root,'',$v['file']) : '';
         $traceline = isset($v['line']) ? $v['line'] : '';
         echo '<tr><td>' . $tracefile . '</td><td>' .  $traceline . '</td><td>' . $v['function'] . '</td></tr>';
     }

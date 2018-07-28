@@ -7,7 +7,7 @@
 // +----------------------------------------------------------------------
 
 define('SystemVersion', '1.0');
-define('Root', dirname(__FILE__ ) . '/');
+define('Root', dirname(__FILE__ ) . DIRECTORY_SEPARATOR );
 define('IsCli', (defined('FlagCliMode') || PHP_SAPI == "cli") ? true : false);
 define('IsAjax', (isset($_GET['ajax']) || isset($_SERVER['HTTP_ORIGIN']) || isset($_SERVER["HTTP_X_REQUESTED_WITH"])) ? true : false);
 chdir(Root);

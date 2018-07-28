@@ -85,4 +85,13 @@ class PostModel extends BaseModel {
         $db->bindParam(':titleOld', $titleOld);
         return $db->execute();
     }
+
+    /**
+     * @return mixed
+     */
+    public function countNum() {
+        $db = $this->prepare('SELECT COUNT(postid) FROM post');
+        $db->execute();
+        return $db->fetch()[0];
+    }
 }

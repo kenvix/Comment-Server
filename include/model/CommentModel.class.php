@@ -135,4 +135,17 @@ class CommentModel extends BaseModel {
         if($and) $sql .= 'AND ';
         return $sql . "`status` = $status ";
     }
+
+    /**
+     * 统计数量
+     * @param int $status
+     * @return mixed
+     */
+    public function countNum($status = self::StatusAll) {
+        $sql = "SELECT COUNT(cid) FROM comment ";
+        if($status != self::StatusAll) $sql .= "WHERE `status` = $status";
+        $db = $this->prepare($sql);
+        $db->execute();
+        return $db->fetch()[0];
+    }
 }
