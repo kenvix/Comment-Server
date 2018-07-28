@@ -33,4 +33,12 @@ class AdminController extends AuthController {
     public function PHPInfo() {
         phpinfo();
     }
+
+    public function TestCache() {
+        $cache = new Cache();
+        if(!$cache->setValue('test','ggg')) msg('设置缓存失败', 70);
+        $get = $cache->getValue('test');
+        if(empty($get)) msg('设置缓存失败', 70);
+        msg('缓存测试通过，Driver:'.CacheDriver.' Key:test Value:' . $get);
+    }
 }

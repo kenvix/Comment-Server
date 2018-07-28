@@ -9,6 +9,20 @@
       <path value="$PROJECT_DIR$/vendor/adbario/php-encrypter" />
       <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
       <path value="$PROJECT_DIR$/vendor/phpmailer/phpmailer" />
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/vendor/cache/tag-interop" />
+      <path value="$PROJECT_DIR$/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/vendor/cache/filesystem-adapter" />
+      <path value="$PROJECT_DIR$/vendor/cache/adapter-common" />
+      <path value="$PROJECT_DIR$/vendor/league/flysystem" />
+      <path value="$PROJECT_DIR$/vendor/cache/hierarchical-cache" />
+      <path value="$PROJECT_DIR$/vendor/predis/predis" />
+      <path value="$PROJECT_DIR$/vendor/cache/predis-adapter" />
+      <path value="$PROJECT_DIR$/vendor/cache/redis-adapter" />
+      <path value="$PROJECT_DIR$/vendor/cache/memcached-adapter" />
+      <path value="$PROJECT_DIR$/vendor/cache/memcache-adapter" />
+      <path value="$PROJECT_DIR$/vendor/cache/apc-adapter" />
     </include_path>
   </component>
   <component name="PhpProjectServersManager">

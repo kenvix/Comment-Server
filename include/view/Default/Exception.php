@@ -127,7 +127,8 @@
 </head>
 <body id="error-page">
 <h3>系统发生错误: 未处理的异常</h3>
-<br/><b>消息：</b>#<?php echo $ex->getCode(); ?> - <?php echo $ex->getMessage(); ?><br/><br/>
+<br/><b>消息：</b>#<?php echo $ex->getCode(); ?> - <?php echo $ex->getMessage(); ?>
+<br/><b>异常：</b><?php echo get_class($ex); ?><br/><br/>
 <table style="width:100%"><thead><th>文件</th><th>行</th><th>代码</th></thead><tbody>
     <?php
     $trace = $ex->getTrace();

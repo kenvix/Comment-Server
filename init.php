@@ -17,6 +17,7 @@ require 'config/database.php';
 require 'config/site.php';
 require 'config/comment.php';
 require 'config/email.php';
+require 'config/cache.php';
 
 error_reporting(ErrorReportLevel);
 
