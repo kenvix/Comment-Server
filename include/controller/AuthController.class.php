@@ -26,6 +26,7 @@ class AuthController extends BaseController {
         } catch (Exception $ex) {
             //TODO: 记录日志
         }
+        define('IsLogin', $this->islogin);
     }
 
     /**
