@@ -16,6 +16,9 @@
                 <li class="topNavi"><a href="<?php echo U('Admin/Adminer'); ?>" target="_blank"><span class="glyphicon glyphicon-compressed"></span> Adminer</a></li>
                 <li class="topNavi"><a href="<?php echo U('Admin/PHPInfo'); ?>" target="_blank"><span class="glyphicon glyphicon glyphicon-oil"></span> PHPInfo</a></li>
             </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="<?php echo U('User/Logout'); ?>"><span class="glyphicon glyphicon-off"></span> 退出</a></li>
+            </ul>
         </div><!-- /.navbar-collapse -->
     </div>
     <div class="container bs-docs-container">

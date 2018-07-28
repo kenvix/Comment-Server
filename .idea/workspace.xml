@@ -6,10 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="c94482e8-7fe9-4cff-9825-982ffcf9d712" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/comment.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/comment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/site.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/site.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/controller/AdminController.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/include/controller/AdminController.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/controller/UserController.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/include/controller/UserController.class.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/view/Default/Navi.php" beforeDir="false" afterPath="$PROJECT_DIR$/include/view/Default/Navi.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/init.php" beforeDir="false" afterPath="$PROJECT_DIR$/init.php" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,11 +27,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="UserController.class.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="UserController.class.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/include/controller/UserController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="23" column="57" lean-forward="true" selection-start-line="23" selection-start-column="57" selection-end-line="23" selection-end-column="57" />
+            <state relative-caret-position="191">
+              <caret line="18" column="33" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="site.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/site.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-12">
+              <caret line="19" column="35" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -37,8 +48,8 @@
       <file leaf-file-name="init.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/init.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="22" column="23" lean-forward="true" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
+            <state relative-caret-position="-159">
+              <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
               <folding>
                 <element signature="e#6#80#0#PHP" expanded="true" />
               </folding>
@@ -61,8 +72,8 @@
       <file leaf-file-name="adminer.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/adminer.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="546">
-              <caret line="26" column="43" lean-forward="true" selection-start-line="26" selection-start-column="43" selection-end-line="26" selection-end-column="43" />
+            <state relative-caret-position="429">
+              <caret line="26" column="43" selection-start-line="26" selection-start-column="43" selection-end-line="26" selection-end-column="43" />
               <folding>
                 <element signature="e#6#80#0#PHP" expanded="true" />
               </folding>
@@ -79,20 +90,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="site.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/site.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="20" column="21" selection-start-line="20" selection-start-column="8" selection-end-line="20" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AdminController.class.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AdminController.class.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/include/controller/AdminController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="29" column="57" selection-start-line="29" selection-start-column="57" selection-end-line="29" selection-end-column="57" />
+            <state relative-caret-position="630">
+              <caret line="35" column="1" selection-start-line="35" selection-start-column="1" selection-end-line="35" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -100,8 +102,8 @@
       <file leaf-file-name="Navi.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/include/view/Default/Navi.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="16" column="72" selection-start-line="16" selection-start-column="72" selection-end-line="16" selection-end-column="72" />
+            <state relative-caret-position="399">
+              <caret line="19" column="54" selection-start-line="19" selection-start-column="54" selection-end-line="19" selection-end-column="54" />
             </state>
           </provider>
         </entry>
@@ -109,8 +111,8 @@
       <file leaf-file-name="AuthController.class.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/include/controller/AuthController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="492">
-              <caret line="75" column="74" selection-start-line="75" selection-start-column="15" selection-end-line="75" selection-end-column="74" />
+            <state relative-caret-position="401">
+              <caret line="70" column="23" selection-start-line="70" selection-start-column="23" selection-end-line="70" selection-end-column="23" />
               <folding>
                 <element signature="e#6#80#0#PHP" expanded="true" />
               </folding>
@@ -224,19 +226,19 @@
         <option value="$PROJECT_DIR$/include/model/CommentModel.class.php" />
         <option value="$PROJECT_DIR$/include/library/function.php" />
         <option value="$PROJECT_DIR$/include/controller/BaseController.class.php" />
-        <option value="$PROJECT_DIR$/include/controller/UserController.class.php" />
         <option value="$PROJECT_DIR$/include/controller/AuthController.class.php" />
         <option value="$PROJECT_DIR$/include/library/class/TemplatedMail.php" />
         <option value="$PROJECT_DIR$/include/controller/PostController.class.php" />
         <option value="$PROJECT_DIR$/include/controller/CommentController.class.php" />
         <option value="$PROJECT_DIR$/include/controller/DebugController.class.php" />
-        <option value="$PROJECT_DIR$/config/site.php" />
         <option value="$PROJECT_DIR$/include/library/class/TemplatedMail.class.php" />
-        <option value="$PROJECT_DIR$/include/view/Default/Navi.php" />
         <option value="$PROJECT_DIR$/init.php" />
         <option value="$PROJECT_DIR$/config/database.php" />
         <option value="$PROJECT_DIR$/public/adminer.php" />
         <option value="$PROJECT_DIR$/include/controller/AdminController.class.php" />
+        <option value="$PROJECT_DIR$/include/view/Default/Navi.php" />
+        <option value="$PROJECT_DIR$/config/site.php" />
+        <option value="$PROJECT_DIR$/include/controller/UserController.class.php" />
       </list>
     </option>
   </component>
@@ -260,7 +262,7 @@
     <servers>
       <server host="localhost" id="19104abe-97fd-418c-a43d-b6ce5c307f71" name="localhost" use_path_mappings="true">
         <path_mappings>
-          <mapping local-root="$PROJECT_DIR$/public" remote-root="C:/Work Station/Web Projects/wordpress" />
+          <mapping local-root="$PROJECT_DIR$/public" remote-root="C:/Work Station/Web Projects/Comment-Server/public" />
         </path_mappings>
       </server>
       <server host="127.0.0.1" id="61e0c3d2-4ee2-48d0-a543-010c2c918f60" name="IIS" />
@@ -280,8 +282,8 @@
   </component>
   <component name="PhpXdebugProxy" ide_key="PHPSTORM" host="127.0.0.1" port="80" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="187" />
-    <option name="y" value="36" />
+    <option name="x" value="186" />
+    <option name="y" value="35" />
     <option name="width" value="1735" />
     <option name="height" value="1000" />
   </component>
@@ -290,8 +292,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
@@ -530,12 +532,13 @@
       <workItem from="1532434750345" duration="24000" />
       <workItem from="1532522895727" duration="1704000" />
       <workItem from="1532568393575" duration="18714000" />
-      <workItem from="1532655886537" duration="3689000" />
+      <workItem from="1532655886537" duration="5318000" />
+      <workItem from="1532741073922" duration="863000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="122661000" />
+    <option name="totallyTimeSpent" value="125153000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -549,23 +552,23 @@
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32872927" />
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32872927" />
       <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32872927" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1796875" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16015625" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39917126" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="PHP-CGI Server" order="7" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.39917126" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Messages" order="7" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="PHP-CGI Server" order="7" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -573,18 +576,18 @@
     </layout>
     <layout-to-restore>
       <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="bottom" id="Version Control" order="12" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="bottom" id="Run" order="4" weight="0.32872927" />
       <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1796875" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="8" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="PHP-CGI Server" order="0" />
+      <window_info anchor="bottom" id="TODO" order="8" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="5" />
@@ -594,13 +597,13 @@
       <window_info anchor="bottom" id="Terminal" order="10" />
       <window_info anchor="bottom" id="Debug" order="5" weight="0.39917126" />
       <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
-      <window_info anchor="bottom" id="Version Control" order="12" />
+      <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" weight="0.32872927" />
       <window_info id="Capture Tool" order="4" />
       <window_info anchor="bottom" id="Message" order="2" />
       <window_info anchor="bottom" id="Messages" order="1" />
       <window_info anchor="right" id="Maven Projects" order="8" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1796875" />
+      <window_info id="Favorites" order="6" side_tool="true" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -611,7 +614,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="33" />
+      <option name="time" value="36" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -811,13 +814,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/include/controller/BaseController.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-19">
@@ -903,13 +899,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/view/Default/Navi.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="16" column="72" selection-start-line="16" selection-start-column="72" selection-end-line="16" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/include/library/function.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-5165">
@@ -917,20 +906,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/controller/AuthController.class.php">
+    <entry file="file://$PROJECT_DIR$/public/adminer.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="75" column="74" selection-start-line="75" selection-start-column="15" selection-end-line="75" selection-end-column="74" />
+        <state relative-caret-position="429">
+          <caret line="26" column="43" selection-start-line="26" selection-start-column="43" selection-end-line="26" selection-end-column="43" />
           <folding>
             <element signature="e#6#80#0#PHP" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/site.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="20" column="21" selection-start-line="20" selection-start-column="8" selection-end-line="20" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -941,20 +923,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/controller/UserController.class.php">
+    <entry file="file://$PROJECT_DIR$/include/controller/AuthController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="23" column="57" lean-forward="true" selection-start-line="23" selection-start-column="57" selection-end-line="23" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/adminer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="26" column="43" lean-forward="true" selection-start-line="26" selection-start-column="43" selection-end-line="26" selection-end-column="43" />
+        <state relative-caret-position="401">
+          <caret line="70" column="23" selection-start-line="70" selection-start-column="23" selection-end-line="70" selection-end-column="23" />
           <folding>
             <element signature="e#6#80#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/view/Default/Navi.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="19" column="54" selection-start-line="19" selection-start-column="54" selection-end-line="19" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/controller/AdminController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="35" column="1" selection-start-line="35" selection-start-column="1" selection-end-line="35" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>
@@ -970,18 +966,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/init.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="22" column="23" lean-forward="true" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
+        <state relative-caret-position="-159">
+          <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
           <folding>
             <element signature="e#6#80#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/controller/AdminController.class.php">
+    <entry file="file://$PROJECT_DIR$/config/site.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="29" column="57" selection-start-line="29" selection-start-column="57" selection-end-line="29" selection-end-column="57" />
+        <state relative-caret-position="-12">
+          <caret line="19" column="35" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/controller/UserController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="18" column="33" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
         </state>
       </provider>
     </entry>

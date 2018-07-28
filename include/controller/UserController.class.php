@@ -16,7 +16,7 @@ class UserController extends AuthController {
     public function LoginAction() {
         $this->checkLogin(true);
         $name = I('post.user');
-        $password = I('post.pw');
+        $password = $_POST['pw'];
         if(empty($name) || empty($password)) redirect(U('User/Login','error=用户名或密码不能为空'));
         $password = hash(AdminPasswordEncryptionAlgorithm, $password);
         if($password == AdminPassword && (strtolower($name) == strtolower(AdminName) || strtolower($name) == strtolower(AdminEmail))) {
@@ -59,5 +59,11 @@ class UserController extends AuthController {
            'email' => AdminEmail,
            'avatar' => md5(AdminEmail)
         ]);
+    }
+
+    public function Logout() {
+        setcookie('commentserver_user', '', 10);
+        setcookie('commentserver_pass', '', 10);
+        redirect(U('User/Login',['msg'=>'注销成功']));
     }
 }

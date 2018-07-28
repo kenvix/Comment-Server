@@ -20,7 +20,7 @@ define('BlockedWord', '习近平 江泽民');
 可以填写下列选项：
 none            : 不记录IP
 REMOTE_ADDR     : 在你的服务器没有使用CDN的前提下，填写这个可获得真实的IP
-X-Forwarded-For : 若你的服务器使用了CDN（例如cloud flare、百度云加速）填写这个。
+X_FORWARDED_FOR : 若你的服务器使用了CDN（例如cloud flare、百度云加速）填写这个。
 */
 define('GetIPMethod', 'REMOTE_ADDR');
 

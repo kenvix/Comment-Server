@@ -33,7 +33,7 @@ sha512 : √ SHA-512 加密，安全性较高
 define('AdminPasswordEncryptionAlgorithm',  'sha512');
 
 //登录COOKIE加密密钥，请随便打32个英文和数字
-define('AdminLoginEncryptKey', 'xew33xqxdocysgqw6rbqavx7r0wutsqf');
+define('AdminLoginEncryptKey', 'xew33xqxeycysgqw6rbqavx7r0wutsqf');
 
 //////----------------------文章设置----------------------//////
 //文章首次被评论时是否探测文章是否存在，防止恶意用户恶意增加文章

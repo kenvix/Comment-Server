@@ -29,4 +29,8 @@ class AdminController extends AuthController {
         else
             redirect('adminer.php?username=&db=' . DBName);
     }
+
+    public function PHPInfo() {
+        phpinfo();
+    }
 }

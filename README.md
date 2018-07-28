@@ -18,3 +18,10 @@ composer install
 
 # 入口
 位于public文件夹
+
+# 配置
+使用 Nginx 的服务端，需要在站点配置文件中加入：
+```nginx
+rewrite ^(.*)$ /public/$1 break;
+```
+将上述代码在原配置文件的 `root` 的下一行加入
