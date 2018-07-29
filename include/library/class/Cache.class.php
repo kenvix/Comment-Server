@@ -136,10 +136,11 @@ class Cache {
     /**
      * @param     $k
      * @param int $num
+     * @param     $defaultValue
      * @return bool
      * @throws \Psr\Cache\InvalidArgumentException
      */
-    public function counterAdd($k, $num = 1) {
-        return $this->setValue($k, $this->getValueWithDefault($k, 0) + $num);
+    public function counterAdd($k, $num = 1, $defaultValue) {
+        return $this->setValue($k, $this->getValueWithDefault($k, $defaultValue) + $num);
     }
 }

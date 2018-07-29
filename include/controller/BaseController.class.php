@@ -8,6 +8,9 @@
 
 class BaseController {
 
+    public function __construct() {
+    }
+
     /**
      * 写CORS头。包括验证跨域请求，若通过则写Access-Control-Allow-Origin头
      */

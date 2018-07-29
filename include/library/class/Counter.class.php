@@ -15,6 +15,7 @@ class Counter {
     const TypeCommentSpam            = 'NumTypeCommentSpam'; //被akismet认为是垃圾评论
     const TypeCommentWaitingAkismet  = 'NumTypeCommentWaitingAkismet'; //待人工审核且待AKISMET处理(在AKISMET处理队列)
     const TypeCommentPerPost         = 'NumTypeCommentG';
+    const TypeEmail                  = 'NumEmail';
     private $type;
     private $cache;
 
@@ -68,9 +69,20 @@ class Counter {
                 return (new CommentModel())->countNum(CommentModel::StatusWaitingAkismet);
                 break;
 
+            case self::TypeEmail:
+                break;
+
             default:
                 throw new InvalidArgumentException('无效的计数器类型');
                 break;
         }
+    }
+
+    /**
+     * @param int $num
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
+    public function add($num = 1) {
+        $this->cache->counterAdd($this->type, $num, $this->getNum());
     }
 }

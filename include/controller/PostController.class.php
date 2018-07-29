@@ -6,11 +6,11 @@
 // Copyright (c) 2018 kenvix.com All rights reserved.
 // +----------------------------------------------------------------------
 
-class PostController extends BaseController {
+class PostController extends AuthController {
 
     /**
      * 添加文章
-     * @throws Exception
+     * @throws \Psr\Cache\InvalidArgumentException
      */
     public function Add() {
         $title = $this->getTitle();
@@ -31,8 +31,12 @@ class PostController extends BaseController {
         }
         if(!$model->add($title))
             msg('添加文章失败，未知错误', 119);
-
+        (new Counter(Counter::TypePost))->add();
         if(Controller == __CLASS__ )
             msg('添加文章成功');
+    }
+
+    public function Admin() {
+        $this->checkLogin();
     }
 }

@@ -39,6 +39,8 @@ spl_autoload_register(function ($class){
     if(file_exists($path)) include $path;
 });
 
+ini_set('request_order', 'GP');
+
 if(!file_exists('vendor/autoload.php')) {
     echo 'Composer 未初始化，请先安装Composer并在此目录运行 composer install';
     die(255);

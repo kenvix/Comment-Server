@@ -16,8 +16,8 @@ class CommentController extends AuthController {
         $pid      = I('post.pid');
         $postText = empty(I('post.posttext')) ? $title : I('post.posttext');
         $ip       = GetIPMethod == 'none' ? '' : $_SERVER[GetIPMethod];
-        if(!empty($_POST['user']) && !empty($_POST['password'])) {
-            if(!$this->checkLoginByCookieString(I('post.user'), I('post.password')))
+        if(!empty($_POST['commentserver_user']) && !empty($_POST['commentserver_pass'])) {
+            if(!$this->islogin)
                 msg('管理员登录会话已失效，请重新登录或以非管理员身份登录',198);
             $this->islogin = true;
             $name     = '';
@@ -136,10 +136,19 @@ class CommentController extends AuthController {
                 $newCommentInfo['avatar']   = md5($email);
                 $newCommentInfo['url']      = $url;
             }
-            if($status != CommentModel::StatusNormal)
+            (new Counter(Counter::TypeCommentAll))->add();
+            switch ($status) {
+                case CommentModel::StatusSpam: $counterType = Counter::TypeCommentSpam; break;
+                case CommentModel::StatusPending: $counterType = Counter::TypeCommentPending; break;
+                case CommentModel::StatusNormal: $counterType = Counter::TypeCommentNormal; break;
+                case CommentModel::StatusWaitingAkismet: $counterType = Counter::TypeCommentWaitingAkismet; break;
+            }
+            if(!empty($counterType)) (new Counter($counterType))->add();
+            if($status != CommentModel::StatusNormal) {
                 msg('评论提交成功，待管理员审核后即可显示', 200, $newCommentInfo);
-            else
-                msg('评论提交成功',0, $newCommentInfo);
+            } else {
+                msg('评论提交成功', 0, $newCommentInfo);
+            }
         }
         else msg('操作失败，未知错误', 109);
     }

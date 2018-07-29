@@ -13,8 +13,16 @@ class AuthController extends BaseController {
     public $islogin = false;
 
     public function __construct() {
+        parent::__construct();
         if(!empty($_COOKIE['commentserver_user']) && !empty($_COOKIE['commentserver_pass'])) {
-            $this->islogin = $this->checkLoginByCookieString($_COOKIE['commentserver_user'], $_COOKIE['commentserver_pass']);
+            $cookieUser = $_COOKIE['commentserver_user'];
+            $cookiePass = $_COOKIE['commentserver_pass'];
+        } elseif(!empty($_REQUEST['commentserver_user']) && !empty($_REQUEST['commentserver_pass'])) {
+            $cookieUser = $_REQUEST['commentserver_user'];
+            $cookiePass = $_REQUEST['commentserver_pass'];
+        }
+        if(isset($cookieUser)) {
+            $this->islogin = $this->checkLoginByCookieString($cookieUser, $cookiePass);
         }
         try {
             $childClassName = get_called_class();
