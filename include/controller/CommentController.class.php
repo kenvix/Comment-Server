@@ -74,7 +74,7 @@ class CommentController extends AuthController {
                 //TODO: 实现异步AKISMET
             }
         }
-        $date = date('Y-m-d H:m:s');
+        $date = date('Y-m-d H:i:s');
         $newCID = $m->add($postid, $pid, $name, $email, $url, $content, $date, $status, $ip, I('server.HTTP_USER_AGENT'));
         if($newCID !== false) {
             if($status == CommentModel::StatusNormal) {

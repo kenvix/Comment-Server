@@ -16,7 +16,7 @@ class AdminController extends AuthController {
     }
 
     public function SendTestMail() {
-        $result = sendMail(AdminEmail, SiteName . ' 测试邮件', '如果你收到了这封邮件，表明邮件设置正确。' . date('Y-m-d H:m:s'));
+        $result = sendMail(AdminEmail, SiteName . ' 测试邮件', '如果你收到了这封邮件，表明邮件设置正确。' . date('Y-m-d H:i:s'));
         if($result === true) msg('测试邮件发送成功');
         else msg('测试邮件发送失败：' . $result,201);
     }
