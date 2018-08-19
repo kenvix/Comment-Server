@@ -70,15 +70,29 @@ class CommentModel extends BaseModel {
         return $this->prepare('DELETE FROM comment WHERE pid = ?')->execute([$pid]);
     }
 
+    /**
+     * get all comments unconditionally
+     * @param int $status
+     * @param int $limit
+     * @param int $begin
+     * @return array
+     */
+    public function getCommentsAll($status = self::StatusNormal, $limit = null, $begin = null) {
+        $db = $this->prepare('SELECT * FROM comment ' . $this->buildCommentStatusSQL($status) . $this->buildLimit($limit, $begin));
+        $db->execute();
+        return $db->fetchAll();
+    }
 
     /**
      * get all comments by postid
      * @param int $postid
      * @param int $status
+     * @param int $limit
+     * @param int $begin
      * @return array
      */
-    public function getComments($postid, $status = self::StatusNormal) {
-        $db = $this->prepare('SELECT * FROM comment WHERE postid = :postid' . $this->buildCommentStatusSQL($status));
+    public function getCommentsByPostID($postid, $status = self::StatusNormal, $limit = null, $begin = null) {
+        $db = $this->prepare('SELECT * FROM comment WHERE postid = :postid' . $this->buildCommentStatusSQL($status) . $this->buildLimit($limit, $begin));
         $db->bindParam(':postid', $postid);
         $db->execute();
         return $db->fetchAll();
@@ -88,10 +102,12 @@ class CommentModel extends BaseModel {
     /**
      * @param     $cid
      * @param int $status
+     * @param int $limit
+     * @param int $begin
      * @return mixed
      */
-    public function getCommentByCID($cid, $status = self::StatusNormal) {
-        $db = $this->prepare('SELECT * FROM comment WHERE cid = :cid' . $this->buildCommentStatusSQL($status));
+    public function getCommentByCID($cid, $status = self::StatusNormal, $limit = null, $begin = null) {
+        $db = $this->prepare('SELECT * FROM comment WHERE cid = :cid' . $this->buildCommentStatusSQL($status) . $this->buildLimit($limit, $begin));
         $db->bindParam(':cid', $cid);
         $db->execute();
         return $db->fetch();
@@ -101,10 +117,12 @@ class CommentModel extends BaseModel {
      * 通过PID获取评论. 混淆警告：若是通过PID获取父评论，应该使用getCommentByCID
      * @param int $pid
      * @param int $status
+     * @param int $limit
+     * @param int $begin
      * @return array
      */
-    public function getCommentsByPID($pid, $status = self::StatusNormal) {
-        $db = $this->prepare('SELECT * FROM comment WHERE pid = :pid' . $this->buildCommentStatusSQL($status));
+    public function getCommentsByPID($pid, $status = self::StatusNormal, $limit = null, $begin = null) {
+        $db = $this->prepare('SELECT * FROM comment WHERE pid = :pid' . $this->buildCommentStatusSQL($status) . $this->buildLimit($limit, $begin));
         $db->bindParam(':pid', $pid);
         $db->execute();
         return $db->fetchAll();
@@ -114,10 +132,12 @@ class CommentModel extends BaseModel {
      * get comments which are not child comments
      * @param int $postid
      * @param int $status
+     * @param int $limit
+     * @param int $begin
      * @return array
      */
-    public function getCommentsParentOnly($postid, $status = self::StatusNormal) {
-        $db = $this->prepare('SELECT * FROM comment WHERE postid = :postid AND pid = 0 ' . $this->buildCommentStatusSQL($status));
+    public function getCommentsParentOnly($postid, $status = self::StatusNormal, $limit = null, $begin = null) {
+        $db = $this->prepare('SELECT * FROM comment WHERE postid = :postid AND pid = 0 ' . $this->buildCommentStatusSQL($status) . $this->buildLimit($limit, $begin));
         $db->bindParam(':postid', $postid);
         $db->execute();
         return $db->fetchAll();

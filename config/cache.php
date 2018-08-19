@@ -7,15 +7,14 @@
 
 // 缓存驱动（使用哪种缓存）
 /* 可以填写下列值：
-警告：必须保持大小写一致，否则会导致不可预测的错误
-Apc
+Apcu
 Memcache
 Memcached
 Predis
 Redis
 Filesystem （注：直接存到文件里，需要允许写入）
  */
-define('CacheDriver', 'Redis');
+define('CacheDriver', 'Apcu');
 
 // 缓存服务器地址
 // 使用Filesystem时，表示存储目录

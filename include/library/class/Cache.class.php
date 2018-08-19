@@ -43,8 +43,12 @@ class Cache {
                 self::$pool  = new \Cache\Adapter\Memcached\MemcachedCachePool($client);
                 break;
 
+            case 'Apcu':
+                self::$pool = new \Cache\Adapter\Apcu\ApcuCachePool();
+                break;
+
             case 'Apc':
-                self::$pool = new \Cache\Adapter\Apc\ApcCachePool();
+                throw new InvalidArgumentException('APC 缓存驱动已经过期，请使用 APCu');
                 break;
 
             default:

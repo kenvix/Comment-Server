@@ -14,8 +14,14 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <?php if(IsLogin): ?>
                 <ul class="nav navbar-nav">
+                    <li class="topNavi"><a href="<?php echo U('Admin/Comment'); ?>" target="_blank"><span class="glyphicon glyphicon-comment"></span> 管理评论</a></li>
                     <li class="topNavi"><a href="<?php echo U('Admin/Adminer'); ?>" target="_blank"><span class="glyphicon glyphicon-compressed"></span> Adminer</a></li>
-                    <li class="topNavi"><a href="<?php echo U('Admin/PHPInfo'); ?>" target="_blank"><span class="glyphicon glyphicon glyphicon-oil"></span> PHPInfo</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-plane"></span> 调试<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class="topNavi"><a href="<?php echo U('Admin/PHPInfo'); ?>" target="_blank"><span class="glyphicon glyphicon glyphicon-oil"></span> PHPInfo</a></li>
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-th-list"></span> 测试<span class="caret"></span></a>
                         <ul class="dropdown-menu">

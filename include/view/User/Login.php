@@ -1,4 +1,4 @@
-<?php View::Load('Default/Header'); ?>
+<?php View::Load('Default/Header', '登录'); ?>
 
 <div class="panel panel-primary" style="margin:1% 1% 1% 1%;">
     <div class="panel-heading">

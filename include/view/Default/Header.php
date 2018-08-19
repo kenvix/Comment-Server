@@ -4,7 +4,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="charset" content="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo SiteName; ?></title>
+    <?php if(!empty($args[0])): ?>
+        <title><?php echo $args[0] . ' - ' . SiteName; ?></title>
+    <?php else: ?>
+        <title><?php echo SiteName; ?></title>
+    <?php endif; ?>
     <meta name="generator" content="Kenvix Comment Server" />
     <link href="favicon.ico" rel="shortcut icon"/>
     <meta name="author" content="Kenvix <i@kenvix.com>" />

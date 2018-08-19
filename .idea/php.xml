@@ -23,6 +23,7 @@
       <path value="$PROJECT_DIR$/vendor/cache/memcached-adapter" />
       <path value="$PROJECT_DIR$/vendor/cache/memcache-adapter" />
       <path value="$PROJECT_DIR$/vendor/cache/apc-adapter" />
+      <path value="$PROJECT_DIR$/vendor/cache/apcu-adapter" />
     </include_path>
   </component>
   <component name="PhpProjectServersManager">

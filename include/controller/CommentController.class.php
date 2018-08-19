@@ -8,6 +8,7 @@
 
 class CommentController extends AuthController {
     const AdminEmailSign = '!1';
+    use CommentTrait;
 
     public function Add() {
         $this->writeCORSHeader();
@@ -154,8 +155,8 @@ class CommentController extends AuthController {
     }
 
     /**
-     * 获取文章评论，同时返回一个可以用于发布评论的token96
-     * @throws Exception
+     * 获取文章评论，同时返回一个可以用于发布评论的token
+     * @throws \Psr\Cache\InvalidArgumentException
      */
     public function Get() {
         $this->writeCORSHeader();
@@ -172,49 +173,6 @@ class CommentController extends AuthController {
         $comments = $this->getComments($fathers, $CommentModel);
         //$comments[TokenName] = generateToken();
         msg('OK',0, ['comments' => $comments]);
-    }
-
-    private function getComments(array $comments, CommentModel $model) {
-        $return = [];
-        foreach ($comments as $value) {
-            $return[$value['cid']] = [
-                'content'  => $value['content'],
-                'date'     => $value['date'],
-                'agent'    => $value['agent'],
-                'cid'      => $value['cid'],
-                'pid'      => $value['pid'],
-                'child'    => $this->getChildComments($value['cid'], $model)
-            ];
-            if($value['email'] == self::AdminEmailSign) {
-                $return[$value['cid']]['author']   = AdminName;
-                $return[$value['cid']]['avatar']   = md5(AdminEmail);
-                $return[$value['cid']]['url']      = BlogUrl;
-            } else {
-                $return[$value['cid']]['author']   = $value['author'];
-                $return[$value['cid']]['avatar']   = md5($value['email']);
-                $return[$value['cid']]['url']      = $value['url'];
-            }
-        }
-        return $return;
-    }
-
-    private function getChildComments($pid, CommentModel $model) {
-        $return    = [];
-        $comments  = $model->getCommentsByPID($pid);
-        foreach ($comments as $value) {
-            $return[$value['cid']] = [
-                'author'   => $value['author'],
-                'avatar'   => md5($value['email']),
-                'url'      => $value['url'],
-                'content'  => $value['content'],
-                'date'     => $value['date'],
-                'agent'    => $value['agent'],
-                'cid'      => $value['cid'],
-                'pid'      => $value['pid'],
-                'child'    => $this->getChildComments($value['cid'], $model)
-            ];
-        }
-        return $return;
     }
 
     public function testTitleParse() {

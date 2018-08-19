@@ -21,6 +21,14 @@ class AdminController extends AuthController {
         else msg('测试邮件发送失败：' . $result,201);
     }
 
+    public function Comment() {
+        $type = (empty($_GET['type']) || !is_numeric($_GET['type'])) ? CommentModel::StatusAll : $_GET['type'];
+        $model = new CommentModel();
+        View::Assign('comments', $model->getCommentsAll($type, AdminPageLineNum, $this->getPageLimitationBegins()));
+        View::Assign('type', $type);
+        View::Load();
+    }
+
     public function Adminer() {
         if(!session_start()) msg('服务器不支持PHP SESSION');
         $_SESSION['ADMINER_PW'] = hash('sha512', $_COOKIE['commentserver_pass'] . $_SERVER['DOCUMENT_ROOT'] . $_SERVER['SERVER_NAME']);

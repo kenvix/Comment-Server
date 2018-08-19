@@ -1,4 +1,4 @@
-<?php View::Load('Default/Header'); ?>
+<?php View::Load('Default/Header','首页'); ?>
 <div class="panel panel-info">
     <div class="panel-heading">
         <h3 class="panel-title">统计信息 <small>(已缓存)</small></h3>

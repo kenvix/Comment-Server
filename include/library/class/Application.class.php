@@ -25,7 +25,7 @@ class Application {
         define('Controller', $controllerClassName);
         define('ControllerName', $this->controller);
 
-        include "include/controller/{$controllerClassName}.class.php";
+        include Root . "include/controller/{$controllerClassName}.class.php";
         $instance = new $controllerClassName();
         if(method_exists($instance, '_initialize')) $instance->_initialize();
         if(method_exists($instance, $this->action)) {
@@ -37,6 +37,75 @@ class Application {
                 $instance->{$this->actionDefault}();
             }
             else throw new InvalidArgumentException('没有这种操作！', 2);
+        }
+        return $this;
+    }
+
+    public function SetupAll() {
+        $this->SetupConfiguration()->SetupConstants()->SetupThingHandler()->SetupDatabase()->SetupComposer()->SetupFunctions();
+    }
+
+    public function SetupConfiguration() {
+        require Root . 'config/advanced.php';
+        require Root . 'config/database.php';
+        require Root . 'config/site.php';
+        require Root . 'config/comment.php';
+        require Root . 'config/email.php';
+        require Root . 'config/cache.php';
+        return $this;
+    }
+
+    public function SetupFunctions() {
+        require Root . 'include/library/function.php';
+        return $this;
+    }
+
+    public function SetupComposer() {
+        if(!file_exists('vendor/autoload.php'))
+            throw new RuntimeException('Composer 未初始化，请先安装Composer并在此目录运行 composer install',253);
+        require Root . 'vendor/autoload.php';
+        return $this;
+    }
+
+    public function SetupConstants() {
+        define('SystemVersion', '1.0');
+        define('IsCli', (defined('FlagCliMode') || PHP_SAPI == "cli") ? true : false);
+        define('IsAjax', (isset($_GET['ajax']) || isset($_SERVER['HTTP_ORIGIN']) || isset($_SERVER["HTTP_X_REQUESTED_WITH"])) ? true : false);
+        chdir(Root);
+        return $this;
+    }
+
+    public function SetupThingHandler() {
+        spl_autoload_register(function ($class){
+            if(strlen($class) > 5 && substr($class, -5) == 'Model') $folder = 'model';
+            elseif(strlen($class) > 9 && substr($class, -9) == 'Exception') $folder = 'library/class/exception';
+            elseif(strlen($class) > 10 && substr($class, -10) == 'Controller') $folder = 'controller';
+            elseif(strlen($class) > 10 && substr($class, -5) == 'Trait') $folder = 'library/class/trait';
+            else $folder = 'library/class';
+            $path = Root . "include/{$folder}/{$class}.class.php";
+            if(file_exists($path)) include $path;
+        });
+        error_reporting(ErrorReportLevel);
+        set_exception_handler(function ($ex) {
+            if(!IsCli && !IsAjax) {
+                View::Assign('ex', $ex);
+                View::Load('Default/Exception');
+                die($ex->getCode());
+            } else {
+                msg('发生异常：' . $ex->getMessage(), $ex->getCode());
+            }
+        });
+        ini_set('request_order', 'GP');
+        return $this;
+    }
+
+    public function SetupDatabase() {
+        if(DBType == 'mysql') {
+            define('DSN', 'mysql://charset=utf8;dbname='.DBName.';host='.DBHost.';port='.DBPort);
+        } elseif(DBType == 'sqlite') {
+
+        } else {
+            throw new InvalidArgumentException('数据库类型填写错误，请检查配置文件', 254);
         }
         return $this;
     }

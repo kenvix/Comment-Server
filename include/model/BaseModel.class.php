@@ -21,4 +21,18 @@ class BaseModel extends PDO {
     public function __construct()  {
         parent::__construct(DSN, DBUser, DBPassword);
     }
+
+    /**
+     * @param int $limit
+     * @param int $begin
+     * @return string
+     */
+    public function buildLimit($limit, $begin = null) {
+        if(!is_null($limit)) {
+            if(is_null($begin))
+                $begin = 0;
+            return " LIMIT $begin,$limit ";
+        }
+        return '';
+    }
 }

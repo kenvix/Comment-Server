@@ -43,4 +43,16 @@ class BaseController {
         }
         return $title;
     }
+
+
+    /**
+     * 根据分页参数获取用于构造SQL查询时起始行数
+     * @return int
+     */
+    protected function getPageLimitationBegins() {
+        $page = empty($_GET['page']) ? 0 : intval($_GET['page']);
+        if($page <= 0)
+            return 0;
+        return $page * AdminPageLineNum;
+    }
 }

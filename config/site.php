@@ -50,3 +50,7 @@ define('BlogArticlePrefix','post/');
 define('BlogArticleSuffix','/');
 //博客文章后缀是否包含参数？
 define('BlogArticleSuffixWithQuery',false);
+
+//////----------------------管理面板设置----------------------//////
+//管理面板分页，一次显示多少行
+define('AdminPageLineNum', 100);

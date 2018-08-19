@@ -7,6 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/aura/sqlquery" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/cache/adapter-common" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/cache/apc-adapter" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cache/apcu-adapter" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/cache/filesystem-adapter" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/cache/hierarchical-cache" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/cache/memcache-adapter" />

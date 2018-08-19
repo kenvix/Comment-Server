@@ -7,19 +7,19 @@ class View {
     /**
      * 加载视图
      * @param null $path 留空将自动加载
-     * @param bool $guess 是否允许使用推断赋值（用完会销毁）
+     * @param mixed ...$args 直接传递给视图的可选参数，在视图内通过 $args 数组获取
      * @throws FileInaccessibleException
      */
-    public static function Load($path = null, $guess = true) {
+    public static function Load($path = null, ...$args) {
         $path = self::GetPath($path);
         $file = Root . "include/view/{$path}.php";
         if(file_exists($file)) {
-            if(!empty(self::$vars[$path])) {
-                extract(self::$vars[$path], EXTR_OVERWRITE);
-            }
-            if($guess && !empty(self::$vars['[G]'])) {
+            if(!empty(self::$vars['[G]'])) {
                 extract(self::$vars['[G]'], EXTR_OVERWRITE);
                 unset(self::$vars['[G]']);
+            }
+            if(!empty(self::$vars[$path])) {
+                extract(self::$vars[$path], EXTR_OVERWRITE);
             }
             include $file;
         } else {
@@ -30,13 +30,13 @@ class View {
     /**
      * 只获取视图即将输出的内容
      * @param null $path 留空将自动加载
-     * @param bool $guess 是否允许使用推断赋值（用完会销毁）
+     * @param mixed ...$args
      * @return string
      * @throws FileInaccessibleException
      */
-    public static function Get($path = null, $guess = true) {
+    public static function Get($path = null, ...$args) {
         ob_start();
-        self::Load($path, $guess);
+        self::Load($path, $args);
         return ob_get_clean();
     }
 

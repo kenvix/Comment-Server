@@ -435,3 +435,23 @@ function isURLTrusted($url) {
     }
     return false;
 }
+
+
+/**
+ * 获取指定邮箱的的Gravatar头像URL
+ * http://en.gravatar.com/site/implement/images/
+ * @param        $email
+ * @param int    $s
+ * @param string $d
+ * @param string $g
+ * @param string $site
+ * @return string
+ */
+function getGravatarURL($email, $s = 140, $d = 'mm', $g = 'g', $site = 'secure') {
+    $hash = md5($email);
+    if($site == 'secure') {
+        return "https://secure.gravatar.com/avatar/$hash?s=$s&d=$d&r=$g";
+    } else {
+        return "//{$site}.gravatar.com/avatar/$hash?s=$s&d=$d&r=$g";
+    }
+}
